@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
-  const { theme } = await req.json();
-
-  const valid = ["light", "dark", "uchiha"];
-  if (!valid.includes(theme)) {
-    return NextResponse.json({ error: "Tema inválido" }, { status: 400 });
-  }
-
+  const { theme } = await req.json().catch(()=>({}));
+  if (!theme) return NextResponse.json({ error: "missing" }, { status: 400 });
   const res = NextResponse.json({ ok: true });
-  res.cookies.set("theme", theme, { path: "/", maxAge: 60 * 60 * 24 * 365 });
-
+  res.cookies.set({
+    name: "theme",
+    value: theme,
+    httpOnly: false,
+    path: "/",
+    maxAge: 60*60*24*365,
+  });
   return res;
 }
