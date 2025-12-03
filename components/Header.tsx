@@ -9,7 +9,7 @@ export default function Header() {
           <a className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center font-bold">UB</div>
             <div>
-              <div className="text-white font-semibold">Uchiha-Bot</div>
+              <div className="text-white font-semibold">𝐁𝐨𝐭𝐬 𝐙𝐨𝐧𝐞 👾</div>
               <div className="text-xs text-gray-400">Site & Painel</div>
             </div>
           </a>
