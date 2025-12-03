@@ -1,13 +1,28 @@
-import { NextResponse } from 'next/server';
-import { generateToken } from '@/lib/auth';
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+import { comparePassword, signToken } from "@/lib/auth";
+import { log } from "@/lib/logger";
 
-export async function POST(req: Request){
-  try{
-    const { email, password } = await req.json().catch(()=>({}));
-    if(!email || !password) return NextResponse.json({ error:'missing' }, { status:400 });
-    // fake check
-    if(email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) return NextResponse.json({ error:'unauth' }, { status:401 });
-    const token = generateToken({ userId: email, role:'admin' });
-    return NextResponse.json({ token });
-  }catch(e:any){ return NextResponse.json({ error: e.message }, { status:500 }) }
+const prisma = new PrismaClient();
+
+export async function POST(req: Request) {
+  const { email, password } = await req.json().catch(()=>({}));
+  if (!email || !password) return NextResponse.json({ error: "missing" }, { status: 400 });
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    await log("WARN", "Login failed - user not found", { email });
+    return NextResponse.json({ error: "invalid" }, { status: 401 });
+  }
+
+  const ok = await comparePassword(password, user.password);
+  if (!ok) {
+    await log("WARN", "Login failed - bad password", { email });
+    return NextResponse.json({ error: "invalid" }, { status: 401 });
+  }
+
+  const token = signToken({ userId: user.id, role: user.role });
+  await log("INFO", "User logged in", { userId: user.id });
+
+  return NextResponse.json({ token });
 }
