@@ -1,23 +1,15 @@
-// app/layout.tsx
-import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-
-export const metadata = {
-  title: '𝐁𝐎𝐓𝐒 𝐙𝐎𝐍𝐄',
-  description: '𝐁𝐨𝐭𝐬 𝐙𝐨𝐧𝐞 — Site e painel prontos'
-}
+import "./globals.css";
+import "./theme.css";
+import { cookies } from "next/headers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = cookies().get("theme")?.value || "dark";
+
   return (
-    <html lang="pt-BR">
-      <body className="bg-black text-white min-h-screen antialiased">
-        <Header />
-        <main className="max-w-5xl mx-auto px-4 py-12">
-          {children}
-        </main>
-        <Footer />
+    <html lang="pt" data-theme={theme}>
+      <body className="bg-[var(--bg)] text-[var(--text)]">
+        {children}
       </body>
     </html>
-  )
+  );
 }
