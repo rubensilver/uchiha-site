@@ -4,7 +4,7 @@ export default function Home() {
     <section className="text-white">
       <div className="bg-gradient-to-b from-black to-[#0b0b0d] rounded-lg p-8 shadow-lg">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-red-600">
-          Uchiha-Bot
+          𝐁𝐨𝐭𝐬 𝐙𝐨𝐧𝐞 👾
         </h1>
         <p className="text-gray-300 max-w-2xl mb-6">
           Site e painel prontos. Controle o seu bot, veja logs e envie mensagens pelo painel.
