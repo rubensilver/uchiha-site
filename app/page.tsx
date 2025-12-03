@@ -1,87 +1,79 @@
 export default function Home() {
   return (
-    <main className="text-white">
-      
-      {/* HERO */}
-      <section className="py-24 text-center bg-gradient-to-b from-black to-[#0b0b0d]">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-red-500 mb-4 tracking-tight">
-          𝐁𝐨𝐭𝐬 𝐙𝐨𝐧𝐞 👾
+    <section className="text-white">
+
+      {/* TOPO DO SITE */}
+      <div className="bg-gradient-to-b from-black to-[#0b0b0d] rounded-lg p-8 shadow-lg">
+
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-red-600">
+          Bots Zone 👾
         </h1>
-        <p className="text-gray-300 text-lg max-w-2xl mx-auto mb-8">
+
+        <p className="text-gray-300 max-w-2xl mb-6">
           A plataforma perfeita para controlar seu bot, gerenciar mensagens,
           visualizar logs e administrar tudo pelo painel.
         </p>
 
-        <div className="flex justify-center gap-4">
-          <a href="/admin/login" className="px-8 py-3 rounded-lg bg-red-600 hover:bg-red-700 transition">
+        {/* 🔥 4 BOTÕES PRINCIPAIS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+
+          <a
+            href="/admin/login"
+            className="block w-full text-center px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 transition"
+          >
             Acessar Painel
           </a>
-          <a href="#sobre" className="px-8 py-3 rounded-lg border border-gray-700 hover:bg-white/10 transition">
-            Sobre o Projeto
+
+          <a
+            href="/api/webhook"
+            className="block w-full text-center px-6 py-3 rounded-lg bg-[#111] border border-gray-700 hover:bg-white/5 transition"
+          >
+            Webhook
+          </a>
+
+          <a
+            href="/admin/send"
+            className="block w-full text-center px-6 py-3 rounded-lg bg-[#111] border border-gray-700 hover:bg-white/5 transition"
+          >
+            Envio de Mensagens
+          </a>
+
+          <a
+            href="/admin/logs"
+            className="block w-full text-center px-6 py-3 rounded-lg bg-[#111] border border-gray-700 hover:bg-white/5 transition"
+          >
+            Logs do Bot
           </a>
         </div>
-      </section>
 
-      {/* FEATURES */}
-      <section className="py-20 bg-[#0f0f10]" id="features">
-        <h2 className="text-center text-3xl font-bold mb-10">Recursos do Sistema</h2>
+      </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <div className="p-6 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">Webhook</h3>
-            <p className="text-gray-400">Receba eventos do WhatsApp Cloud API em tempo real.</p>
-          </div>
+      {/* SEÇÕES PADRÃO */}
+      <section className="mt-12 grid md:grid-cols-3 gap-6">
 
-          <div className="p-6 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">Envio</h3>
-            <p className="text-gray-400">Envie mensagens diretamente do painel, em um clique.</p>
-          </div>
-
-          <div className="p-6 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">Logs</h3>
-            <p className="text-gray-400">Acompanhe logs, erros e histórico completo do bot.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* SOBRE */}
-      <section className="py-20" id="sobre">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Sobre o Projeto</h2>
-          <p className="text-gray-400 text-lg">
-            Este sistema foi criado para oferecer uma solução completa para bots WhatsApp,
-            com painel administrativo, gerenciamento de mensagens, logs e integração total
-            com a API oficial do WhatsApp Cloud.
+        <div className="p-6 bg-[#0f0f10] rounded-lg">
+          <h3 className="font-bold text-red-500">Webhook</h3>
+          <p className="text-gray-400">
+            Receba eventos do WhatsApp Cloud API em tempo real.
           </p>
         </div>
-      </section>
 
-      {/* FAQ */}
-      <section className="py-20 bg-[#0f0f10]">
-        <h2 className="text-center text-3xl font-bold mb-10">Perguntas Frequentes</h2>
-
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="p-5 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">Preciso pagar algo?</h3>
-            <p className="text-gray-400">Não. Toda a estrutura pode ser usada gratuitamente.</p>
-          </div>
-
-          <div className="p-5 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">O painel funciona no celular?</h3>
-            <p className="text-gray-400">Sim! Ele é totalmente responsivo.</p>
-          </div>
-
-          <div className="p-5 bg-black/40 rounded-lg">
-            <h3 className="text-red-500 font-bold text-xl mb-2">Posso adicionar operadores?</h3>
-            <p className="text-gray-400">Em breve! O sistema de múltiplos usuários está chegando.</p>
-          </div>
+        <div className="p-6 bg-[#0f0f10] rounded-lg">
+          <h3 className="font-bold text-red-500">Envio</h3>
+          <p className="text-gray-400">
+            Envie mensagens diretamente do painel.
+          </p>
         </div>
+
+        <div className="p-6 bg-[#0f0f10] rounded-lg">
+          <h3 className="font-bold text-red-500">Logs</h3>
+          <p className="text-gray-400">
+            Visualize logs do bot e histórico.
+          </p>
+        </div>
+
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-10 text-center text-gray-500 border-t border-gray-800">
-        © {new Date().getFullYear()} Bots Zone. Todos os direitos reservados.
-      </footer>
-    </main>
+    </section>
   );
 }
