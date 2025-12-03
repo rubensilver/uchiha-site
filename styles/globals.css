@@ -1,0 +1,13 @@
+/* globals.css - imports do Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ajustes estéticos */
+html, body {
+  height: 100%;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
