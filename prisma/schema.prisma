@@ -1,21 +1,24 @@
-
-generator client { provider = "prisma-client-js" }
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  password String
-  pin String?
-  role String @default("admin")
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // hash
+  role      String   @default("operator") // "admin" | "operator"
   createdAt DateTime @default(now())
 }
+
 model Log {
-  id Int @id @default(autoincrement())
-  level String
-  message String
-  meta Json?
+  id        Int      @id @default(autoincrement())
+  level     String
+  message   String
+  meta      Json?
   createdAt DateTime @default(now())
 }
