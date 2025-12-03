@@ -1,10 +1,31 @@
-import { NextResponse } from 'next/server';
-import { sendText } from '@/lib/whatsapp';
-export async function POST(req: Request){
-  const { to, message } = await req.json().catch(()=>({}));
-  if(!to || !message) return NextResponse.json({ error:'missing' }, { status:400 });
-  try{
-    const r = await sendText(to, message);
-    return NextResponse.json({ ok:true, r });
-  }catch(e:any){ return NextResponse.json({ error: e.message }, { status:500 }) }
+// app/api/send/route.ts
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+  try {
+    const { to, message } = await req.json();
+
+    if (!to || !message) {
+      return NextResponse.json(
+        { error: "Dados faltando (to, message)" },
+        { status: 400 }
+      );
+    }
+
+    // Aqui você futuramente chamará seu bot:
+    // await sendMessageToWhatsApp(to, message)
+
+    return NextResponse.json({
+      ok: true,
+      status: "Mensagem enviada (simulação).",
+      to,
+      message
+    });
+
+  } catch (e) {
+    return NextResponse.json(
+      { error: "Erro ao enviar mensagem" },
+      { status: 500 }
+    );
+  }
 }
