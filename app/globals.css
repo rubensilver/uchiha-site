@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Uchiha theme */
+:root { --bg:#050506; --muted:#9aa1a6; --accent:#c30707; }
+html,body{background:var(--bg);color:#e6e6e6;font-family:Inter,system-ui;}
+a{color:var(--accent)}

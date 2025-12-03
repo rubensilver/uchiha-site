@@ -1,0 +1,1 @@
+export default function WM(){ return <main className='p-6'><h2>Webhook Monitor</h2></main> }

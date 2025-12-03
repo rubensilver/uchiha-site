@@ -1,0 +1,1 @@
+export default function Docs(){ return <main className='p-6'><h2>Docs</h2></main> }

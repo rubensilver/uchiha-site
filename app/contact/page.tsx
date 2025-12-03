@@ -1,0 +1,1 @@
+export default function Contact(){ return <main className='p-8'><h2>Contactos</h2><p>Contacte-nos</p></main> }

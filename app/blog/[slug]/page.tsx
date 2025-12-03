@@ -1,0 +1,1 @@
+export default function Post(){ return <main className='p-8'><h2>Post</h2></main> }

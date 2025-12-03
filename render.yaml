@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: uchiha-site
+    env: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ADMIN_EMAIL
+        value: verzinonly@gmail.com
+      - key: ADMIN_PASSWORD
+        value: "@#948963368"
+      - key: ADMIN_PIN
+        value: "4321"
+      - key: JWT_SECRET
+        sync: false
+      - key: WHATSAPP_API_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_ID
+        sync: false
+      - key: VERIFY_TOKEN
+        value: UCHIHA_VERIFIED

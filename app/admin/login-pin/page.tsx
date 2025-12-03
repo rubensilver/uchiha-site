@@ -1,0 +1,3 @@
+'use client'
+import { useState } from 'react'
+export default function LoginPin(){ const [pin,setPin]=useState(''); async function s(e:any){e.preventDefault(); const r=await fetch('/api/admin/login-pin',{method:'POST',body:JSON.stringify({pin}),headers:{'content-type':'application/json'}}); if(r.ok) window.location.href='/admin/dashboard'; else alert('Erro'); } return (<form onSubmit={s} className='max-w-md mx-auto p-4'><h2 className='text-2xl'>Login PIN</h2><input value={pin} onChange={ev=>setPin(ev.target.value)} placeholder='PIN' className='w-full p-2 mt-2 bg-[#111]'/><button className='mt-3 bg-red-700 p-2 rounded'>Entrar</button></form>) }

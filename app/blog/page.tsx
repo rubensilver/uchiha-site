@@ -1,0 +1,1 @@
+export default function Blog(){ return <main className='p-8'><h2>Blog</h2><p>Posts...</p></main> }
