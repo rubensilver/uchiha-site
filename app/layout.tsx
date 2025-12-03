@@ -4,8 +4,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata = {
-  title: 'Uchiha-Bot',
-  description: 'Uchiha Bot — Site e painel prontos'
+  title: '𝐁𝐎𝐓𝐒 𝐙𝐎𝐍𝐄',
+  description: '𝐁𝐨𝐭𝐬 𝐙𝐨𝐧𝐞 — Site e painel prontos'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
