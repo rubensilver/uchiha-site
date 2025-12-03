@@ -1,0 +1,23 @@
+/* Tema Claro */
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --bg2: #f2f2f2;
+  --text: #111111;
+  --primary: #2563eb;
+}
+
+/* Tema Escuro */
+:root[data-theme="dark"] {
+  --bg: #0b0b0d;
+  --bg2: #0f0f10;
+  --text: #ffffff;
+  --primary: #ef4444;
+}
+
+/* Tema Uchiha Vermelho */
+:root[data-theme="uchiha"] {
+  --bg: #0b0000;
+  --bg2: #180000;
+  --text: #ffdddd;
+  --primary: #ff0000;
+}
