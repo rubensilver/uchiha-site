@@ -2,7 +2,7 @@ FROM node:20-bullseye AS builder
 WORKDIR /app
 
 # copy package files first (cache)
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm ci
 
 # copy rest
