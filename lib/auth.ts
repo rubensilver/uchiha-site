@@ -7,10 +7,10 @@ export function generateToken(data: any) {
   return jwt.sign(data, secret, { expiresIn: "7d" });
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string): null | { userId: string; role: string } {
   try {
-    return jwt.verify(token, secret);
-  } catch (e) {
+    return jwt.verify(token, secret) as { userId: string; role: string };
+  } catch {
     return null;
   }
 }
