@@ -6,12 +6,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+# COPIA O PRISMA ANTES DO GENERATE
+COPY prisma ./prisma
+
 COPY . .
 
-# GERA O PRISMA CLIENT AQUI! 🔥
 RUN npx prisma generate
 
-# Compila o Next.js
 RUN npm run build
 
 # Etapa 2 — Runner
