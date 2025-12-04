@@ -8,7 +8,7 @@ export async function log(level: "INFO" | "WARN" | "ERROR", message: string, met
       data: {
         level,
         message,
-        meta: meta ?? {},
+        meta: JSON.stringify(meta || {}) },
       },
     });
   } catch (e) {
