@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",
+    "bcrypt": "^6.0.0",
     "cookie": "^0.6.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.3",
     "prisma": "^5.15.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",
