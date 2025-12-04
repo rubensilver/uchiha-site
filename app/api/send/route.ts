@@ -13,9 +13,11 @@ export async function POST(req: Request) {
     const token = auth.replace("Bearer ", "");
 
     // Agora o verifyToken SEMPRE retorna JwtPayload
-    const payload = verifyToken(token) as any;
-
-    const userId = payload.userId || "unknown";
+    const payload = verifyToken(token) as { userId?: string } | null;
+const userId = payload?.userId;
+if (!userId) {
+  // se você aceitar admin token com userId="admin", trate isso
+}
 
     const data = await req.json();
 
