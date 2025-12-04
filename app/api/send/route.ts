@@ -1,28 +1,33 @@
-import { verifyToken } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { log } from "@/lib/logger";
+import { verifyToken } from "@/lib/auth";
 
 export async function POST(req: Request) {
-  const auth = req.headers.get("authorization") || "";
-  const token = auth.replace("Bearer ", "");
-
-  const payload = verifyToken(token);
-
-  if (!payload) {
-    await log("ERROR", "Send failed: invalid token", {});
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-
-  const userId = payload.userId; // ✅ agora funciona
-
   try {
+    const auth = req.headers.get("authorization");
+
+    if (!auth) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const token = auth.replace("Bearer ", "");
+
+    // Agora o verifyToken SEMPRE retorna JwtPayload
+    const payload = verifyToken(token) as any;
+
+    const userId = payload.userId || "unknown";
+
     const data = await req.json();
 
-    await log("INFO", "Message sent", { userId, msg: data.message });
+    await log("INFO", "Mensagem enviada", {
+      userId,
+      to: data.to,
+    });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ ok: true });
   } catch (e) {
-    await log("ERROR", "Send failed", { userId });
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
+    console.error("Send route error:", e);
+    await log("ERROR", "Send route fail", {});
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }
