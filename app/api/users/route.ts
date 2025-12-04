@@ -10,9 +10,12 @@ export async function POST(req: Request) {
   const { email, password, role } = await req.json();
   const users = DB.users.all();
 
-  if (users.find(u => u.email === email)) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
-  }
+if (users.find((u: any) => u.email === email)) {
+  return NextResponse.json(
+    { error: "User already exists" },
+    { status: 409 }
+  );
+}
 
   const hashed = await bcrypt.hash(password, 10);
 
