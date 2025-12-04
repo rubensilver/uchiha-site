@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const SECRET = process.env.JWT_SECRET || "uchiha-secret";
+const SECRET = process.env.JWT_SECRET || "121212";
 
 export function generateToken(data: any) {
   return jwt.sign(data, SECRET, { expiresIn: "7d" });
