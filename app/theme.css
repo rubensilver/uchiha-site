@@ -9,3 +9,9 @@
   --accent: #ef4444;
 }
 body { background: var(--bg); color: var(--text); }
+
+:root[data-theme="uchiha"] {
+  --bg: #0a0a0d;         /* fundo mais sombrio */
+  --text: #f2f2f2;       /* texto claro */
+  --accent: #d00000;     /* vermelho Uchiha */
+}
