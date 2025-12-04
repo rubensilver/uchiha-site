@@ -1,15 +1,16 @@
+// lib/auth.ts
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 const SECRET = process.env.JWT_SECRET || "uchiha-secret";
 
-export function verifyToken(token: string) {
-  return jwt.verify(token, SECRET) as jwt.JwtPayload;
+export function generateToken(data: any) {
+  return jwt.sign(data, SECRET, { expiresIn: "7d" });
 }
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, secret);
+    return jwt.verify(token, SECRET) as { userId?: string; role?: string; [k: string]: any } | null;
   } catch (e) {
     return null;
   }
