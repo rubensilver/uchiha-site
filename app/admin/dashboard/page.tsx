@@ -1,96 +1,89 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
-  const router = useRouter();
-
   const [logs, setLogs] = useState<any[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Carrega usuário salvo no localStorage
-  useEffect(() => {
-    const session = localStorage.getItem("session");
-    if (session) {
-      setUser(JSON.parse(session));
-    }
-  }, []);
-
-  // Carrega logs
   useEffect(() => {
     fetch('/api/logs')
-      .then(r => r.json())
-      .then(j => setLogs(j.logs || []));
+      .then((r) => r.json())
+      .then((j) => setLogs(j.logs || []))
+      .finally(() => setLoading(false));
   }, []);
 
-  function logout() {
-    localStorage.removeItem("session");
-    router.push('/admin/login');
-  }
-
   return (
-    <main className="p-6">
+    <main className="p-6 max-w-5xl mx-auto">
 
-      {/* CABEÇALHO BONITO */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-red-500">Painel • BOT ZONE</h1>
+      {/* TÍTULO */}
+      <header className="mb-8">
+        <h1 className="text-4xl font-extrabold text-red-600 tracking-tight">
+          Painel • BOT ZONE
+        </h1>
+        <p className="text-zinc-400 mt-1">
+          Bem-vindo ao painel administrativo do seu bot.
+        </p>
+      </header>
 
-        {user && (
-          <div className="flex items-center gap-3">
-            <span className="text-gray-300 text-sm">
-              Logado como: <b>{user.email}</b>
-            </span>
-            <button
-              onClick={logout}
-              className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded"
-            >
-              Sair
-            </button>
-          </div>
-        )}
-      </div>
+      {/* CARDS RESUMO */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
 
-      {/* AÇÕES RÁPIDAS */}
-      <section className="mb-6 bg-[#0f0f10] p-4 rounded-lg border border-gray-800">
-        <h2 className="font-semibold mb-3">Ações</h2>
+        <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
+          <h3 className="text-lg font-semibold">Usuário logado</h3>
+          <p className="text-zinc-400 text-sm">
+            {typeof window !== 'undefined'
+              ? JSON.parse(localStorage.getItem('session') || '{}')?.email
+              : '---'}
+          </p>
+        </div>
 
-        <div className="flex gap-3 flex-wrap">
-          <Link href="/admin/send" className="px-4 py-2 bg-red-600 rounded hover:bg-red-700">
+        <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
+          <h3 className="text-lg font-semibold">Total de Logs</h3>
+          <p className="text-red-500 font-bold text-xl">{logs.length}</p>
+        </div>
+
+        <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
+          <h3 className="text-lg font-semibold">Webhook</h3>
+          <p className="text-green-400 font-medium">Online</p>
+        </div>
+
+      </section>
+
+      {/* AÇÕES */}
+      <section className="mb-10 bg-zinc-900 border border-zinc-800 p-6 rounded-xl">
+        <h2 className="text-2xl font-semibold mb-4">Ações Rápidas</h2>
+
+        <div className="flex flex-wrap gap-4">
+          <Link href="/admin/send" className="px-5 py-3 bg-red-600 rounded-lg shadow hover:bg-red-700 transition">
             Enviar Mensagem
           </Link>
 
-          <Link href="/admin/logs" className="px-4 py-2 bg-zinc-800 rounded hover:bg-zinc-700">
+          <Link href="/admin/logs" className="px-5 py-3 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition">
             Ver Logs
           </Link>
 
-          <Link href="/admin/theme" className="px-4 py-2 bg-zinc-800 rounded hover:bg-zinc-700">
+          <Link href="/admin/theme" className="px-5 py-3 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition">
             Trocar Tema
-          </Link>
-
-          <Link href="/admin/login" className="px-4 py-2 border border-gray-600 rounded hover:bg-white/10">
-            Login
           </Link>
         </div>
       </section>
 
-      {/* LOGS */}
+      {/* LISTA DE LOGS */}
       <section>
-        <h3 className="font-semibold mb-2">Últimos Logs</h3>
+        <h2 className="text-2xl font-semibold mb-4">Últimos Logs</h2>
 
-        <div className="space-y-2">
-          {logs.length === 0 && (
-            <div className="text-gray-400 text-sm">Nenhum log registrado ainda.</div>
-          )}
+        {loading && <p className="text-zinc-500">Carregando...</p>}
 
+        {!loading && logs.length === 0 && (
+          <p className="text-zinc-500">Nenhum log registrado ainda.</p>
+        )}
+
+        <div className="space-y-3">
           {logs.map((l, i) => (
-            <div
-              key={i}
-              className="p-3 rounded bg-[#0f0f10] border border-gray-800"
-            >
-              <div className="text-xs text-gray-400">{l.createdAt}</div>
-              <div className="font-medium text-red-400">{l.level}</div>
+            <div key={i} className="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
+              <div className="text-sm text-zinc-500">{l.createdAt}</div>
+              <div className="font-semibold text-red-400">{l.level}</div>
               <div className="text-sm">{l.message}</div>
             </div>
           ))}
