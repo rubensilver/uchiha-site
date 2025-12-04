@@ -1,0 +1,7 @@
+/* patch-ui.css - small helpers for patched UI */
+.theme-container { padding: 20px; }
+.panel-main { padding: 24px; background: #000; color:#fff; min-height: 100vh; }
+.responsive-hide { display:block; }
+@media(max-width:900px){
+  .responsive-hide { display:none; }
+}
