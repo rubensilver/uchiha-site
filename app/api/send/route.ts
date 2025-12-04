@@ -1,14 +1,36 @@
-import { NextResponse } from 'next/server';
-import { addLog } from '@/lib/logger';
+import { NextResponse } from "next/server";
+import { DB } from "@/lib/db";
 
-export async function POST(req: Request){
+export async function POST(req: Request) {
   try {
-    const data = await req.json().catch(()=>null);
-    if(!data?.to || !data?.message) return NextResponse.json({ error:'missing fields' }, { status:400 });
-    await addLog({ level:'INFO', message:`send to ${data.to}: ${data.message}`, createdAt:new Date().toISOString() });
-    return NextResponse.json({ status:'ok', data });
-  } catch(e:any){
-    console.error(e);
-    return NextResponse.json({ error:'failed' }, { status:500 });
+    const data = await req.json().catch(() => null);
+
+    if (!data?.number || !data?.message) {
+      return NextResponse.json(
+        { error: "Campos faltando" },
+        { status: 400 }
+      );
+    }
+
+    // Salvar log
+    const logs = DB.logs.all();
+    logs.push({
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+      message: "Mensagem enviada manualmente",
+      meta: {
+        number: data.number,
+        message: data.message
+      }
+    });
+    DB.logs.save(logs);
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "Erro interno" },
+      { status: 500 }
+    );
   }
 }
