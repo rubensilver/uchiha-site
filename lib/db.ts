@@ -1,65 +1,51 @@
-import fs from "fs";
-import path from "path";
+// lib/db.ts
+import fs from 'fs';
+import path from 'path';
 
-// Base local (sem banco), usando arquivos JSON
-const base = path.join(process.cwd(), "data");
+const DATA_DIR = path.join(process.cwd(), 'data');
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
-// ----------------------------
-// Funções internas
-// ----------------------------
+function p(file: string) {
+  return path.join(DATA_DIR, file);
+}
+
 function load(file: string) {
-  const p = path.join(base, file);
-  if (!fs.existsSync(p)) return [];
-  return JSON.parse(fs.readFileSync(p, "utf8"));
+  const fp = p(file);
+  if (!fs.existsSync(fp)) return [];
+  try {
+    return JSON.parse(fs.readFileSync(fp, 'utf8'));
+  } catch {
+    return [];
+  }
 }
 
 function save(file: string, data: any) {
-  const p = path.join(base, file);
-  fs.writeFileSync(p, JSON.stringify(data, null, 2));
-}
-
-// ----------------------------
-// LOG SYSTEM
-// ----------------------------
-export function addLog(data: any) {
-  console.log("[LOG]", data);
-  const logs = load("logs.json");
-  logs.push({ ...data, createdAt: new Date().toISOString() });
-  save("logs.json", logs);
-  return true;
-}
-
-// ----------------------------
-// USER SYSTEM
-// ----------------------------
-export function findUser(email: string) {
-  const users = load("users.json");
-  return users.find((u: any) => u.email === email);
+  fs.writeFileSync(p(file), JSON.stringify(data, null, 2), 'utf8');
 }
 
 export function addUser(user: any) {
-  const users = load("users.json");
+  const users = load('users.json');
   users.push(user);
-  save("users.json", users);
-  return true;
+  save('users.json', users);
+  return user;
 }
 
-// ----------------------------
-// MESSAGES
-// ----------------------------
+export function findUser(email: string) {
+  const users = load('users.json');
+  return users.find((u: any) => u.email === email);
+}
+
 export const DB = {
   users: {
-    all() { return load("users.json"); },
-    save(data: any) { save("users.json", data); }
+    all: () => load('users.json'),
+    save: (d: any) => save('users.json', d),
   },
-
   messages: {
-    all() { return load("messages.json"); },
-    save(data: any) { save("messages.json", data); }
+    all: () => load('messages.json'),
+    save: (d: any) => save('messages.json', d),
   },
-
   logs: {
-    all() { return load("logs.json"); },
-    save(data: any) { save("logs.json", data); }
-  }
+    all: () => load('logs.json'),
+    save: (d: any) => save('logs.json', d),
+  },
 };
