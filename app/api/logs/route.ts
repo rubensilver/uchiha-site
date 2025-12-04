@@ -1,12 +1,7 @@
-import { NextResponse } from 'next/server';
-import { getLogs } from '@/lib/logger';
+import { NextResponse } from "next/server";
+import { DB } from "@/lib/db";
 
 export async function GET(){
-  try {
-    const logs = getLogs(200);
-    return NextResponse.json({ logs });
-  } catch(e:any){
-    console.error(e);
-    return NextResponse.json({ error:'failed' }, { status:500 });
-  }
+  const logs = DB.logs.all();
+  return NextResponse.json({ logs });
 }
