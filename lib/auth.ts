@@ -4,9 +4,7 @@ import bcrypt from "bcryptjs";
 const secret = process.env.JWT_SECRET || "default_secret_key";
 
 export function generateToken(data: any) {
-  return jwt.sign(data, secret, {
-    expiresIn: "7d",
-  });
+  return jwt.sign(data, secret, { expiresIn: "7d" });
 }
 
 export function verifyToken(token: string) {
