@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+// resto do seu código...
 // app/api/auth/create-admin/route.ts
 import { NextResponse } from 'next/server';
 import { addUser, findUser } from '@/lib/db';
