@@ -6,18 +6,19 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { to, content, direction } = await req.json();
-  const messages = DB.messages.all();
+  try {
+    const body = await req.json();
+    const messages = DB.messages.all();
 
-  messages.push({
-    id: Date.now(),
-    to,
-    content,
-    direction,
-    createdAt: new Date().toISOString()
-  });
+    messages.push({
+      ...body,
+      createdAt: new Date().toISOString()
+    });
 
-  DB.messages.save(messages);
+    DB.messages.save(messages);
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 }
