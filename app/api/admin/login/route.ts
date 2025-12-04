@@ -1,27 +1,32 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { generateToken } from '@/lib/auth';
+import { generateToken, comparePassword } from "@/lib/auth";
 import { log } from "@/lib/logger";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json().catch(()=>({}));
-  if (!email || !password) return NextResponse.json({ error: "missing" }, { status: 400 });
+  const { password } = await req.json().catch(() => ({}));
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findFirst({
+    where: { role: "admin" }
+  });
+
   if (!user) {
-    await log("WARN", "Login failed - user not found", { email });
     return NextResponse.json({ error: "invalid" }, { status: 401 });
   }
 
   const ok = await comparePassword(password, user.password);
   if (!ok) {
-    await log("WARN", "Login failed - bad password", { email });
+    await log("WARN", "Login failed: bad password");
     return NextResponse.json({ error: "invalid" }, { status: 401 });
   }
 
-  const token = generateToken({ userId: "admin", role: "admin" });
+  const token = generateToken({
+    userId: user.id,
+    role: user.role
+  });
+
   await log("INFO", "User logged in", { userId: user.id });
 
   return NextResponse.json({ token });
