@@ -1,20 +1,26 @@
-FROM node:20-alpine AS deps
-WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install --production=false
-
+# Etapa 1 — Builder
 FROM node:20-alpine AS builder
+
 WORKDIR /app
-COPY . .
+
+COPY package.json package-lock.json ./
 RUN npm install
+
+COPY . .
+
+# GERA O PRISMA CLIENT AQUI! 🔥
+RUN npx prisma generate
+
+# Compila o Next.js
 RUN npm run build
 
-FROM node:20-alpine AS runner
+# Etapa 2 — Runner
+FROM node:20-alpine
+
 WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+
+COPY --from=builder /app ./
+
 EXPOSE 3000
-CMD ["npm","start"]
+
+CMD ["npm", "start"]
