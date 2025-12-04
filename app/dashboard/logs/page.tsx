@@ -1,8 +1,10 @@
-export default function LogsPage() {
+import BackButton from "@/components/BackButton";
+
+export default function Page() {
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Logs Recentes</h2>
-      <p>Em breve: logs reais do webhook</p>
+      <BackButton />
+      {/* resto da página */}
     </div>
   );
 }
