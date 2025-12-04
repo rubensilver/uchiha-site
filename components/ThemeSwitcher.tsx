@@ -1,37 +1,40 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState } from 'react';
 
-export default function ThemeSwitcher(){
+export default function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState("uchiha");
-
-  useEffect(()=>{
-    const t = localStorage.getItem("theme") || "uchiha";
-    setTheme(t);
-    document.documentElement.setAttribute("data-theme", t);
-  },[]);
-
-  function apply(t: string){
-    setTheme(t);
-    localStorage.setItem("theme", t);
-    document.documentElement.setAttribute("data-theme", t);
-    setOpen(false);
-  }
+  const themes = ['claro','escuro','uchiha'];
 
   return (
-    <div className="relative">
-      <button onClick={()=>setOpen(!open)} className="px-3 py-2 rounded bg-black/20 flex items-center gap-2">
-        <span className="w-3 h-3 rounded-full bg-red-600"></span>
-        <span className="text-sm">Tema</span>
+    <div className="theme-switcher">
+      <button aria-expanded={open} onClick={() => setOpen(!open)} className="ts-toggle">
+        {open ? 'Fechar temas ▲' : 'Trocar Tema ▾'}
       </button>
 
-      {open && (
-        <div className="absolute right-0 mt-2 w-40 bg-zinc-900 border border-zinc-800 rounded shadow p-2 z-50">
-          <button onClick={()=>apply("light")} className="w-full text-left px-2 py-1 rounded hover:bg-zinc-800">Claro</button>
-          <button onClick={()=>apply("dark")} className="w-full text-left px-2 py-1 rounded hover:bg-zinc-800">Escuro</button>
-          <button onClick={()=>apply("uchiha")} className="w-full text-left px-2 py-1 rounded hover:bg-zinc-800 text-red-400">Uchiha</button>
-        </div>
-      )}
+      <div className={`ts-panel ${open ? 'open' : ''}`}>
+        {themes.map(t => (
+          <button
+            key={t}
+            onClick={() => {
+              try { localStorage.setItem('site-theme', t); window.location.reload(); } catch(e){}
+            }}
+            className={`ts-btn ts-btn-${t}`}
+          >
+            {t[0].toUpperCase() + t.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <style jsx>{`
+        .theme-switcher { padding: 8px; }
+        .ts-toggle { background: transparent; border: 1px solid rgba(255,255,255,0.08); color: inherit; padding: 8px 12px; border-radius: 8px; cursor:pointer; }
+        .ts-panel { max-height:0; overflow:hidden; transition: max-height .28s ease; margin-top:8px; display:flex; gap:8px; }
+        .ts-panel.open { max-height:200px; }
+        .ts-btn { padding:10px 14px; border-radius:10px; border: none; cursor:pointer; }
+        .ts-btn-uchiha { background:#c62828; color: #fff; }
+        .ts-btn-escuro { background:#222; color:#fff; }
+        .ts-btn-claro { background:#e0e0e0; color:#000; }
+      `}</style>
     </div>
-  );
+  )
 }
