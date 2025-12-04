@@ -1,30 +1,30 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { comparePassword, generateToken } from "@/lib/auth";
-import { log } from "@/lib/logger";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const { pin, email, password } = await req.json().catch(() => ({}));
-    if (!pin) return NextResponse.json({ error: "missing" }, { status: 400 });
-    if (pin !== process.env.ADMIN_PIN) return NextResponse.json({ error: "unauth" }, { status: 401 });
+    const { email, password } = await req.json();
 
-    // Example: create or find admin user (or use static admin). Adjust to your flow.
-    // If you use email/password:
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !(await comparePassword(password, user.password))) {
-      await log("WARN", "Login failed - bad credentials", { email });
-      return NextResponse.json({ error: "invalid" }, { status: 401 });
-    }
+    if (!email || !password)
+      return NextResponse.json({ error: "missing" }, { status: 400 });
 
-    const token = generateToken({ userId: String(user.id), role: user.role });
-    await log("INFO", "User logged in", { userId: user.id });
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
 
-    return NextResponse.json({ token });
-  } catch (e) {
-    console.error(e);
+    if (!user)
+      return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+    const ok = await bcrypt.compare(password, user.password);
+
+    if (!ok)
+      return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+    return NextResponse.json({ success: true });
+  } catch {
     return NextResponse.json({ error: "server" }, { status: 500 });
   }
-}
+                               }
