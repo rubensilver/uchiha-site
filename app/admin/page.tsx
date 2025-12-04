@@ -1,24 +1,43 @@
-export default function AdminHome() {
+"use client";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
+
+export default function AdminHome(){
   return (
-    <div>
-      <h2 className="text-3xl font-bold mb-5">Dashboard</h2>
+    <div className="min-h-screen">
+      <div className="max-w-6xl mx-auto">
+        <div className="py-6">
+          <h1 className="text-4xl font-bold text-red-500">Painel • Uchiha</h1>
+          <p className="text-zinc-300 mt-2">Visão geral e ações rápidas.</p>
+        </div>
 
-      <p className="text-lg text-zinc-300">
-        Bem-vindo ao Painel do BOT ZONE.
-      </p>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 rounded bg-zinc-900 border border-zinc-800">
+            <h3 className="font-semibold">Status</h3>
+            <p className="text-sm text-zinc-400">Webhook: <span className="text-green-300">online</span></p>
+          </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/theme">
-          Trocar Tema
-        </a>
+          <div className="p-4 rounded bg-zinc-900 border border-zinc-800">
+            <h3 className="font-semibold">Mensagens</h3>
+            <p className="text-sm text-zinc-400">Últimas 24h: 0</p>
+          </div>
 
-        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/logs">
-          Ver Logs
-        </a>
+          <div className="p-4 rounded bg-zinc-900 border border-zinc-800">
+            <h3 className="font-semibold">Logs</h3>
+            <p className="text-sm text-zinc-400">Últimos eventos: ver /admin/logs</p>
+          </div>
+        </section>
 
-        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/settings">
-          Configurações
-        </a>
+        <div className="mt-6">
+          <h2 className="text-2xl font-bold mb-3">Ações rápidas</h2>
+          <div className="flex gap-3">
+            <a className="px-4 py-2 rounded bg-red-600" href="/admin/theme">Trocar Tema</a>
+            <a className="px-4 py-2 rounded bg-zinc-800" href="/admin/logs">Ver Logs</a>
+          </div>
+        </div>
+
+        <Footer />
       </div>
     </div>
   );
