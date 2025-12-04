@@ -1,17 +1,23 @@
-FROM node:20-bullseye AS builder
+# Use a imagem oficial Node.js
+FROM node:20-bullseye AS runner
+
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# copy package files first (cache)
+# Copiar package.json
 COPY package.json ./
-RUN npm ci
 
-# copy rest
+# Instalar dependências (npm ci não funciona sem package-lock)
+RUN npm install
+
+# Copiar todos os arquivos do projeto
 COPY . .
-ENV NODE_ENV=production
+
+# Build do projeto Next.js
 RUN npm run build
 
-FROM node:20-bullseye AS runner
-WORKDIR /app
-COPY --from=builder /app/ ./
-ENV NODE_ENV=production
-CMD ["npm", "run", "start"]
+# Expor porta
+EXPOSE 3000
+
+# Comando final
+CMD ["npm", "start"]
