@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 export async function log(level: "INFO" | "WARN" | "ERROR", message: string, meta?: any) {
   try {
     await prisma.log.create({
-      data: { level, message, meta: meta || {} },
+      data: {
+        level,
+        message,
+        meta: meta ?? {},
+      },
     });
   } catch (e) {
     console.error("log error", e);
