@@ -1,70 +1,55 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
+import { Moon, Sun, Flame } from 'lucide-react';
 
 export default function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
-  const themes = ["light", "dark", "uchiha"];
 
-  function applyTheme(t: string) {
+  const themes = [
+    { id: 'escuro', label: 'Escuro', icon: <Moon size={16} />, color: '#111' },
+    { id: 'claro', label: 'Claro', icon: <Sun size={16} />, color: '#f3f3f3' },
+    { id: 'uchiha', label: 'Uchiha', icon: <Flame size={16} />, color: '#b91c1c' },
+  ];
+
+  const applyTheme = (t: string) => {
     try {
-      // salvar no navegador
-      localStorage.setItem("site-theme", t);
-
-      // salvar cookie que o layout usa
-      document.cookie = `theme=${t}; path=/; max-age=31536000`;
-
-      // recarregar página
+      localStorage.setItem('site-theme', t);
       window.location.reload();
-    } catch (e) {}
-  }
+    } catch {}
+  };
 
   return (
-    <div className="theme-switcher">
+    <div className="p-3">
       <button
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="ts-toggle"
+        className="w-full py-2 px-4 rounded-lg bg-[var(--accent)] text-white font-semibold shadow"
       >
-        {open ? "Fechar temas ▲" : "Trocar Tema ▾"}
+        {open ? 'Fechar Temas ▲' : 'Trocar Tema ▾'}
       </button>
 
-      <div className={`ts-panel ${open ? "open" : ""}`}>
-        {themes.map((t) => (
-          <button key={t} onClick={() => applyTheme(t)} className={`ts-btn ts-btn-${t}`}>
-            {t[0].toUpperCase() + t.slice(1)}
-          </button>
-        ))}
+      <div
+        className={`transition-all duration-300 overflow-hidden ${
+          open ? 'max-h-40 mt-3' : 'max-h-0'
+        }`}
+      >
+        <div className="flex gap-3">
+          {themes.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => applyTheme(t.id)}
+              className="flex-1 flex items-center gap-2 py-2 px-3 rounded-lg bg-black/40 border border-gray-700 hover:bg-black/60 transition"
+            >
+              <div
+                className="w-4 h-4 rounded-full"
+                style={{ background: t.color }}
+              ></div>
+              {t.icon}
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
-
-      <style jsx>{`
-        .theme-switcher { padding: 8px; }
-        .ts-toggle {
-          background: transparent;
-          border: 1px solid rgba(255,255,255,0.2);
-          color: inherit;
-          padding: 8px 12px;
-          border-radius: 8px;
-          cursor: pointer;
-        }
-        .ts-panel {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.28s ease;
-          margin-top: 8px;
-          display: flex;
-          gap: 8px;
-        }
-        .ts-panel.open { max-height: 200px; }
-        .ts-btn {
-          padding: 10px 14px;
-          border-radius: 10px;
-          border: none;
-          cursor: pointer;
-        }
-        .ts-btn-uchiha { background: #c62828; color: #fff; }
-        .ts-btn-dark { background: #222; color: #fff; }
-        .ts-btn-light { background: #e0e0e0; color: #000; }
-      `}</style>
     </div>
   );
 }
