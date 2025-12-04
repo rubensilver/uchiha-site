@@ -1,33 +1,11 @@
+// app/api/admin/login/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { generateToken, comparePassword } from "@/lib/auth";
-import { log } from "@/lib/logger";
-
-const prisma = new PrismaClient();
+import { generateToken } from "@/lib/auth";
 
 export async function POST(req: Request) {
-  const { password } = await req.json().catch(() => ({}));
-
-  const user = await prisma.user.findFirst({
-    where: { role: "admin" }
-  });
-
-  if (!user) {
-    return NextResponse.json({ error: "invalid" }, { status: 401 });
-  }
-
-  const ok = await comparePassword(password, user.password);
-  if (!ok) {
-    await log("WARN", "Login failed: bad password");
-    return NextResponse.json({ error: "invalid" }, { status: 401 });
-  }
-
-  const token = generateToken({
-    userId: user.id,
-    role: user.role
-  });
-
-  await log("INFO", "User logged in", { userId: user.id });
-
+  const { pin } = await req.json().catch(() => ({}));
+  if (!pin) return NextResponse.json({ error: "missing" }, { status: 400 });
+  if (pin !== process.env.ADMIN_PIN) return NextResponse.json({ error: "unauth" }, { status: 401 });
+  const token = generateToken({ userId: "admin", role: "admin" });
   return NextResponse.json({ token });
 }
