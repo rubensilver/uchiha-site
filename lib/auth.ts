@@ -1,11 +1,10 @@
-// lib/auth.ts
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const secret = process.env.JWT_SECRET || "default_secret_key";
+const SECRET = process.env.JWT_SECRET || "uchiha-secret";
 
-export function generateToken(data: any) {
-  return jwt.sign(data, secret, { expiresIn: "7d" });
+export function verifyToken(token: string) {
+  return jwt.verify(token, SECRET) as jwt.JwtPayload;
 }
 
 export function verifyToken(token: string) {
