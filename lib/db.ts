@@ -49,3 +49,7 @@ export const DB = {
     save: (d: any) => save('logs.json', d),
   },
 };
+export function addLog(data: any) {
+  console.log("[LOG]", data);
+  return true;
+}
