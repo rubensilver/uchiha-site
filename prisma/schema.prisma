@@ -1,11 +1,10 @@
-// prisma/schema.prisma
-datasource db {
-  provider = "sqlite" // ou "postgresql" para produção
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model Log {
@@ -20,7 +19,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  role      String
+  role      String   // "admin" | "operador"
   createdAt DateTime @default(now())
 }
 
@@ -28,6 +27,6 @@ model Message {
   id        Int      @id @default(autoincrement())
   to        String
   content   String
-  direction String
+  direction String   // sent | received
   createdAt DateTime @default(now())
 }
