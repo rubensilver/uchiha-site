@@ -1,3 +1,35 @@
-'use client'
-import { useState } from 'react'
-export default function Login(){ const [e,setE]=useState(''); const [p,setP]=useState(''); async function s(ev:any){ev.preventDefault(); const r=await fetch('/api/admin/login',{method:'POST',body:JSON.stringify({email:e,password:p}),headers:{'content-type':'application/json'}}); if(r.ok) window.location.href='/admin/dashboard'; else alert('Erro');} return (<form onSubmit={s} className='max-w-md mx-auto p-4'><h2 className='text-2xl'>Login Admin</h2><input value={e} onChange={ev=>setE(ev.target.value)} placeholder='email' className='w-full p-2 mt-2 bg-[#111]'/><input type='password' value={p} onChange={ev=>setP(ev.target.value)} placeholder='password' className='w-full p-2 mt-2 bg-[#111]'/><button className='mt-3 bg-red-700 p-2 rounded'>Entrar</button></form>) }
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function LoginPage(){
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [err, setErr] = useState('');
+  const router = useRouter();
+
+  async function submit(e:any){
+    e.preventDefault();
+    setErr('');
+    const res = await fetch('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }), headers: { 'Content-Type':'application/json' } });
+    const json = await res.json();
+    if (json.success){
+      localStorage.setItem('session', JSON.stringify(json.user));
+      router.push('/admin/dashboard');
+    } else {
+      setErr(json.error || 'Erro');
+    }
+  }
+
+  return (
+    <main className="p-6 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Entrar no Painel</h1>
+      <form onSubmit={submit} className="flex flex-col gap-3">
+        <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="p-3 rounded bg-[#0f0f10]" />
+        <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Senha" className="p-3 rounded bg-[#0f0f10]" />
+        <button className="bg-red-600 text-white py-2 rounded">Entrar</button>
+        {err && <div className="text-red-400">{err}</div>}
+      </form>
+    </main>
+  );
+}

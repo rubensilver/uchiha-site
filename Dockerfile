@@ -1,27 +1,18 @@
-# Etapa 1 — Builder
-FROM node:20-alpine AS builder
+# Builder based on Debian (glibc) to avoid Prisma/native engine problems
+FROM node:20-bullseye AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
-
-# COPIA O PRISMA ANTES DO GENERATE
-COPY prisma ./prisma
+COPY package.json package-lock.json* ./
+RUN npm install --production=false
 
 COPY . .
 
-RUN npx prisma generate
-
+# no prisma generate (we removed prisma). Build the site
 RUN npm run build
 
-# Etapa 2 — Runner
-FROM node:20-alpine
-
+FROM node:20-bullseye AS runner
 WORKDIR /app
-
-COPY --from=builder /app ./
-
+COPY --from=builder /app .
 EXPOSE 3000
-
 CMD ["npm", "start"]
