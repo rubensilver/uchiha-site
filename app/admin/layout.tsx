@@ -11,8 +11,10 @@ export default function AdminLayout(
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex">
 
-      {/* Sidebar fixa no lado esquerdo */}
-      <Sidebar />
+      {/* Sidebar fixa em telas grandes */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
 
       {/* Conteúdo principal */}
       <div className="flex-1 flex flex-col">
