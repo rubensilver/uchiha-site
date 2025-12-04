@@ -1,19 +1,27 @@
-import { NextResponse } from 'next/server';
-import { findUser } from '@/lib/db';
-import { verify } from '@/lib/auth';
+import { NextResponse } from "next/server";
 
-export async function POST(req: Request){
+export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(()=>({}));
-    const { email, password } = body;
-    if(!email || !password) return NextResponse.json({ error:'missing' }, { status:400 });
-    const user = findUser(email);
-    if(!user) return NextResponse.json({ error:'unauthorized' }, { status:401 });
-    const ok = verify(password, user.password);
-    if(!ok) return NextResponse.json({ error:'unauthorized' }, { status:401 });
-    return NextResponse.json({ success:true, user:{ email: user.email, role: user.role } });
-  } catch(e:any){
-    console.error(e);
-    return NextResponse.json({ error:'server' }, { status:500 });
+    const { email, password, pin } = await req.json();
+
+    // Aqui você valida como quiser
+    if (email === "admin@uchiha.com" && password === "1234") {
+      return NextResponse.json({ success: true });
+    }
+
+    // validação de PIN opcional
+    if (pin === "0000") {
+      return NextResponse.json({ success: true });
+    }
+
+    return NextResponse.json(
+      { success: false, error: "Credenciais inválidas" },
+      { status: 401 }
+    );
+  } catch (e) {
+    return NextResponse.json(
+      { success: false, error: "Erro no servidor" },
+      { status: 500 }
+    );
   }
 }
