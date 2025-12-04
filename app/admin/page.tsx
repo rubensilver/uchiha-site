@@ -1,34 +1,25 @@
-"use client";
-
-export default function ThemeChanger() {
-  const changeTheme = async (theme: string) => {
-    await fetch("/api/theme", {
-      method: "POST",
-      body: JSON.stringify({ theme }),
-      headers: { "Content-Type": "application/json" }
-    });
-
-    window.location.reload();
-  };
-
+export default function AdminHome() {
   return (
-    <div className="p-6 bg-[var(--bg2)] rounded-lg">
-      <h2 className="font-bold text-[var(--primary)] mb-3">Trocar Tema</h2>
+    <div>
+      <h2 className="text-3xl font-bold mb-5">Dashboard</h2>
 
-      <div className="flex gap-3">
-        <button onClick={() => changeTheme("light")} className="px-4 py-2 bg-gray-200 text-black rounded">
-          Claro
-        </button>
+      <p className="text-lg text-zinc-300">
+        Bem-vindo ao Painel do BOT ZONE.
+      </p>
 
-        <button onClick={() => changeTheme("dark")} className="px-4 py-2 bg-gray-800 text-white rounded">
-          Escuro
-        </button>
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/theme">
+          Trocar Tema
+        </a>
 
-        <button onClick={() => changeTheme("uchiha")} className="px-4 py-2 bg-red-600 text-white rounded">
-          Uchiha
-        </button>
+        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/logs">
+          Ver Logs
+        </a>
+
+        <a className="p-5 bg-zinc-800 rounded-lg border border-red-700 hover:bg-zinc-700" href="/admin/settings">
+          Configurações
+        </a>
       </div>
     </div>
   );
 }
-<ThemeChanger />
