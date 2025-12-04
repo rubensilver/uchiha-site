@@ -1,0 +1,32 @@
+UCHIHA-SITE PATCH B (upgrade minimal)
+-------------------------------------
+This patch updates only the server-side small parts to work WITHOUT Prisma.
+It uses JSON files stored in /data for users, logs and messages.
+
+Steps:
+1) Backup repo branch:
+   git checkout -b before-upgrade-b
+   git add . && git commit -m "backup before B upgrade"
+
+2) Remove prisma artifacts (if any):
+   rm -rf prisma dev.db node_modules/.prisma node_modules/@prisma || true
+
+3) Copy files from ZIP into repo root, overwrite when prompted.
+
+4) Edit package.json and remove these dependencies:
+   - "prisma"
+   - "@prisma/client"
+
+5) Commit changes:
+   git add .
+   git commit -m "patch: use JSON backend (B)"
+   git push origin <branch>
+
+6) Deploy: Render will build from your branch automatically.
+   After deploy run once:
+     https://<your-render-url>/api/auth/create-admin?email=you@example.com&password=1234
+   Then login at /admin/login
+
+Notes:
+- Do NOT run next build on Termux. Only push to Git and let Render build.
+- Data stored in /data is local to the container. For production use an external DB.
