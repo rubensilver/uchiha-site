@@ -1,5 +1,4 @@
 // lib/session.ts
-"use client";
 
 export function getSessionUser() {
   if (typeof window === "undefined") return null;
@@ -8,30 +7,23 @@ export function getSessionUser() {
     const raw = localStorage.getItem("session");
     if (!raw) return null;
 
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error("Erro ao ler session:", err);
+    const json = JSON.parse(raw);
+    if (!json?.email) return null;
+
+    return json;
+  } catch {
     return null;
   }
 }
 
-export function setSessionUser(user: any) {
-  if (typeof window === "undefined") return;
-
+export function setSessionUser(user: { email: string }) {
   try {
     localStorage.setItem("session", JSON.stringify(user));
-  } catch (err) {
-    console.error("Erro ao salvar session:", err);
-  }
+  } catch {}
 }
 
-export function logoutUser() {
-  if (typeof window === "undefined") return;
-
+export function clearSession() {
   try {
     localStorage.removeItem("session");
-    window.location.href = "/admin/login";
-  } catch (err) {
-    console.error("Erro ao remover session:", err);
-  }
+  } catch {}
 }
