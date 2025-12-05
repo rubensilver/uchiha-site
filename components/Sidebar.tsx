@@ -1,32 +1,22 @@
 'use client';
-
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Sidebar() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  const menu = [
-    { href: '/admin/dashboard', label: '📊 Dashboard' },
-    { href: '/admin/theme', label: '🎨 Temas' },
-    { href: '/admin/logs', label: '📜 Logs' },
-    { href: '/admin/config', label: '⚙️ Configurações' },
-  ];
 
   return (
     <>
       {/* BOTÃO MOBILE */}
-      <button 
-        className="lg:hidden fixed top-4 left-4 z-50 bg-red-700 px-3 py-2 rounded text-white"
+      <button
+        className="sidebar-toggle"
         onClick={() => setOpen(!open)}
       >
-        {open ? "Fechar ✖" : "Menu ☰"}
+        ☰
       </button>
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR PRINCIPAL */}
       <aside className={`panel-sidebar ${open ? 'open' : ''}`}>
         <div className="panel-title">
           <div className="icon-box">
@@ -37,16 +27,10 @@ export default function Sidebar() {
 
         <nav>
           <ul>
-            {menu.map(item => (
-              <li key={item.href}>
-                <Link 
-                  href={item.href}
-                  className={pathname === item.href ? 'active' : ''}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            <li><Link href="/admin/dashboard" onClick={() => setOpen(false)}>📊 Dashboard</Link></li>
+            <li><Link href="/admin/theme" onClick={() => setOpen(false)}>🎨 Temas</Link></li>
+            <li><Link href="/admin/logs" onClick={() => setOpen(false)}>📜 Logs</Link></li>
+            <li><Link href="/admin/config" onClick={() => setOpen(false)}>⚙️ Configurações</Link></li>
           </ul>
         </nav>
 
@@ -62,21 +46,20 @@ export default function Sidebar() {
             color: #fff;
             min-height: 100vh;
             box-shadow: 2px 0 0 rgba(255, 0, 0, 0.12) inset;
-            position: relative;
+            transition: transform .25s ease;
           }
 
-          /* MOBILE */
-          @media (max-width: 900px) {
+          /* MOBILE fechado */
+          @media(max-width: 900px){
             .panel-sidebar {
               position: fixed;
               top: 0;
-              left: -260px;
-              height: 100vh;
-              transition: left .25s ease;
-              z-index: 40;
+              left: 0;
+              transform: translateX(-260px);
+              z-index: 200;
             }
             .panel-sidebar.open {
-              left: 0;
+              transform: translateX(0);
             }
           }
 
@@ -122,13 +105,29 @@ export default function Sidebar() {
             background: rgba(185, 28, 28, 0.25);
           }
 
-          nav a.active {
-            background: rgba(185, 28, 28, 0.45);
-            font-weight: bold;
-          }
-
           .panel-theme {
             margin-top: 30px;
+          }
+
+          /* BOTÃO MOBILE */
+          .sidebar-toggle {
+            display: none;
+          }
+
+          @media(max-width: 900px){
+            .sidebar-toggle {
+              position: fixed;
+              top: 12px;
+              left: 12px;
+              z-index: 300;
+              background: #3b0000;
+              border: 1px solid #7b0000;
+              color: #fff;
+              padding: 8px 10px;
+              border-radius: 6px;
+              font-size: 20px;
+              display: block;
+            }
           }
         `}</style>
       </aside>
