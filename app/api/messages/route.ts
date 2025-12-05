@@ -7,6 +7,7 @@ export async function GET() {
     const messages = DB.messages.all();
     return NextResponse.json({ messages });
   } catch (err) {
+    console.error("MESSAGES GET ERROR:", err);
     return NextResponse.json({ error: 'failed' }, { status: 500 });
   }
 }
@@ -14,14 +15,18 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => null);
+    if (!body) return NextResponse.json({ success: false, error: "missing body" }, { status: 400 });
+
     const messages = DB.messages.all();
-    messages.push({
+    messages.unshift({
+      id: Date.now(),
       ...body,
       createdAt: new Date().toISOString(),
     });
-    DB.messages.save(messages);
+    DB.messages.save(messages.slice(0, 1000));
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error("MESSAGES POST ERROR:", err);
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }
