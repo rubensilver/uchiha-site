@@ -1,3 +1,4 @@
+// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
 import { findUser } from "@/lib/db";
 import { verify, generateToken } from "@/lib/auth";
@@ -23,17 +24,17 @@ export async function POST(req: Request) {
       user: { email: user.email }
     });
 
-    // criar cookie HTTP-Only
-    res.cookies.set("session_token", token, {
+    res.cookies.set({
+      name: "session_token",
+      value: token,
       httpOnly: true,
       secure: true,
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 dias
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return res;
-
   } catch (e) {
     console.error(e);
     return NextResponse.json(
