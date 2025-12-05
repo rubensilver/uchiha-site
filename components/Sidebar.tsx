@@ -4,7 +4,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?: string; forceMode?: boolean }) {
+export default function Sidebar({
+  mode = "minimal",
+  forceMode = false
+}: {
+  mode?: string;
+  forceMode?: boolean;
+}) {
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -51,7 +58,6 @@ export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?
             transition: transform .28s ease;
           }
 
-          /* Título */
           .panel-title {
             display: flex;
             align-items: center;
@@ -97,7 +103,6 @@ export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?
             margin-top: 30px;
           }
 
-          /* ------ MOBILE ------ */
           .mobile-toggle {
             display: none;
             position: fixed;
