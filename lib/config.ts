@@ -1,6 +1,7 @@
 // lib/config.ts
+import { load, save } from "./config-storage";
 
-let sidebarMode = "minimal"; // padrão
+let sidebarMode = load("sidebar.json")?.mode || "minimal";
 
 export function getSidebarMode() {
   return sidebarMode;
@@ -8,4 +9,5 @@ export function getSidebarMode() {
 
 export function setSidebarMode(mode: string) {
   sidebarMode = mode;
+  save("sidebar.json", { mode });
 }
