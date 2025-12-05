@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
   const session = req.cookies.get("session_token")?.value;
 
   // rotas públicas
-  const publicRoutes = ["/admin/login", "/admin/register"];
+  const publicRoutes = ["/admin/login"];
 
   const isPublic = publicRoutes.some((route) => url.pathname.startsWith(route));
   const isAdmin = url.pathname.startsWith("/admin");
