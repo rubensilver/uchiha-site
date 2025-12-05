@@ -4,14 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-export default function Sidebar({
-  mode = "minimal",
-  forceMode = false
-}: {
-  mode?: string;
-  forceMode?: boolean;
-}) {
-
+export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?: string; forceMode?: boolean }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -47,7 +40,6 @@ export default function Sidebar({
         </div>
 
         <style jsx>{`
-          /* SIDEBAR DESKTOP */
           .panel-sidebar {
             width: 230px;
             padding: 18px 14px;
