@@ -7,8 +7,9 @@ import { hash } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, role } = await req.json();
 
+    // 1️⃣ validação básica
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: "Email e senha são obrigatórios." },
@@ -16,6 +17,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // 2️⃣ evitar duplicados
     const exists = findUser(email);
     if (exists) {
       return NextResponse.json(
@@ -24,23 +26,30 @@ export async function POST(req: Request) {
       );
     }
 
-    const newUser = {
+    // 3️⃣ criar usuário
+    const user = {
       email,
       password: hash(password),
-      role: "admin",
+      role: role || "admin", // padrão: admin
       createdAt: new Date().toISOString(),
     };
 
-    addUser(newUser);
+    addUser(user);
 
+    // 4️⃣ retorno seguro
     return NextResponse.json({
       success: true,
-      message: "Usuário criado com sucesso!",
+      user: {
+        email: user.email,
+        role: user.role,
+      },
     });
-  } catch (e) {
-    console.error("Register error:", e);
+
+  } catch (err: any) {
+    console.error("REGISTER ERROR:", err);
+
     return NextResponse.json(
-      { success: false, error: "Erro interno ao registrar." },
+      { success: false, error: "Erro interno no registro." },
       { status: 500 }
     );
   }
