@@ -11,10 +11,16 @@ export default function LoginPage(){
   async function submit(e:any){
     e.preventDefault();
     setErr('');
-    const res = await fetch('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }), headers: { 'Content-Type':'application/json' } });
+
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
     const json = await res.json();
+
     if (json.success){
-      localStorage.setItem('session', JSON.stringify(json.user));
       router.push('/admin/dashboard');
     } else {
       setErr(json.error || 'Erro');
@@ -24,10 +30,12 @@ export default function LoginPage(){
   return (
     <main className="p-6 max-w-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">Entrar no Painel</h1>
+
       <form onSubmit={submit} className="flex flex-col gap-3">
         <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" className="p-3 rounded bg-[#0f0f10]" />
         <input value={password} onChange={e=>setPassword(e.target.value)} type="password" placeholder="Senha" className="p-3 rounded bg-[#0f0f10]" />
         <button className="bg-red-600 text-white py-2 rounded">Entrar</button>
+
         {err && <div className="text-red-400">{err}</div>}
       </form>
     </main>
