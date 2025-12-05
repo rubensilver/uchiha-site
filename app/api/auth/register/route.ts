@@ -1,3 +1,6 @@
+// app/api/auth/register/route.ts
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { addUser, findUser } from "@/lib/db";
 import { hash } from "@/lib/auth";
@@ -21,19 +24,20 @@ export async function POST(req: Request) {
       );
     }
 
-    addUser({
+    const newUser = {
       email,
       password: hash(password),
       role: "admin",
       createdAt: new Date().toISOString(),
-    });
+    };
+
+    addUser(newUser);
 
     return NextResponse.json({
       success: true,
-      message: "Usuário registrado com sucesso.",
+      message: "Usuário criado com sucesso!",
     });
-
-  } catch (e: any) {
+  } catch (e) {
     console.error("Register error:", e);
     return NextResponse.json(
       { success: false, error: "Erro interno ao registrar." },
