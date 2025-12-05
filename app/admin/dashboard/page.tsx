@@ -1,12 +1,20 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { getSessionUser } from '@/lib/session';
 
 export default function Dashboard() {
   const [logs, setLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    // 1️⃣ Carregar usuário logado
+    const u = getSessionUser();
+    setUser(u);
+
+    // 2️⃣ Carregar logs
     fetch('/api/logs')
       .then((r) => r.json())
       .then((j) => setLogs(j.logs || []))
@@ -28,21 +36,22 @@ export default function Dashboard() {
 
       {/* CARDS RESUMO */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-
+        
+        {/* Usuário Logado */}
         <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
           <h3 className="text-lg font-semibold">Usuário logado</h3>
           <p className="text-zinc-400 text-sm">
-            {typeof window !== 'undefined'
-              ? JSON.parse(localStorage.getItem('session') || '{}')?.email
-              : '---'}
+            {user?.email ?? '---'}
           </p>
         </div>
 
+        {/* Total Logs */}
         <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
           <h3 className="text-lg font-semibold">Total de Logs</h3>
           <p className="text-red-500 font-bold text-xl">{logs.length}</p>
         </div>
 
+        {/* Webhook */}
         <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl shadow">
           <h3 className="text-lg font-semibold">Webhook</h3>
           <p className="text-green-400 font-medium">Online</p>
@@ -50,7 +59,7 @@ export default function Dashboard() {
 
       </section>
 
-      {/* AÇÕES */}
+      {/* AÇÕES RÁPIDAS */}
       <section className="mb-10 bg-zinc-900 border border-zinc-800 p-6 rounded-xl">
         <h2 className="text-2xl font-semibold mb-4">Ações Rápidas</h2>
 
@@ -89,6 +98,7 @@ export default function Dashboard() {
           ))}
         </div>
       </section>
+
     </main>
   );
 }
