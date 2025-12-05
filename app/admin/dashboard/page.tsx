@@ -1,5 +1,6 @@
 'use client';
 
+import LoaderPanel from "@/components/LoaderPanel";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getSessionUser } from '@/lib/session';
