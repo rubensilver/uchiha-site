@@ -1,5 +1,6 @@
 // lib/session.ts
 
+// Retorna o usuário logado (email, role, token)
 export function getSessionUser() {
   if (typeof window === "undefined") return null;
 
@@ -8,20 +9,24 @@ export function getSessionUser() {
     if (!raw) return null;
 
     const json = JSON.parse(raw);
+
+    // validação básica
     if (!json?.email) return null;
 
-    return json;
+    return json; // { email, role, token }
   } catch {
     return null;
   }
 }
 
-export function setSessionUser(user: { email: string }) {
+// Salva todos os dados do usuário
+export function setSessionUser(user: any) {
   try {
     localStorage.setItem("session", JSON.stringify(user));
   } catch {}
 }
 
+// Remove sessão
 export function clearSession() {
   try {
     localStorage.removeItem("session");
