@@ -92,7 +92,9 @@ export default function Dashboard() {
           {logs.map((l, i) => (
             <div key={i} className="p-4 bg-zinc-900 border border-zinc-800 rounded-lg">
               <div className="text-sm text-zinc-500">{l.createdAt}</div>
-              <div className="font-semibold text-red-400">{l.level}</div>
+              <div className="font-semibold text-red-400">
+  {l.level ?? "INFO"}
+</div>
               <div className="text-sm">{l.message}</div>
             </div>
           ))}
