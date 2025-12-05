@@ -35,3 +35,12 @@ export function addLog(data: any) {
   logs = logs.slice(0, 1000);
   return true;
 }
+
+theme: {
+  get() {
+    return load("theme.json");
+  },
+  save(data: any) {
+    save("theme.json", data);
+  }
+},
