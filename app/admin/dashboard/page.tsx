@@ -83,7 +83,7 @@ export default function Dashboard() {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Últimos Logs</h2>
 
-        {loading && <p className="text-zinc-500">Carregando...</p>}
+        {loading && <LoaderPanel />}
 
         {!loading && logs.length === 0 && (
           <p className="text-zinc-500">Nenhum log registrado ainda.</p>
