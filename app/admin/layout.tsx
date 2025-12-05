@@ -1,17 +1,27 @@
-// app/admin/layout.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { getSessionUser } from "@/lib/auth"; // usamos tua função oficial
 
 export default function AdminLayout(
   { children }: { children: React.ReactNode }
 ) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = getSessionUser();
+    if (!user) {
+      router.replace("/admin/login");
+    }
+  }, [router]);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex">
 
-      {/* Sidebar fixa em telas grandes */}
+      {/* Sidebar apenas em telas grandes */}
       <div className="hidden md:block">
         <Sidebar />
       </div>
@@ -19,10 +29,10 @@ export default function AdminLayout(
       {/* Conteúdo principal */}
       <div className="flex-1 flex flex-col">
 
-        {/* Header fixo no topo */}
+        {/* Header fixo */}
         <Header />
 
-        {/* Conteúdo das páginas */}
+        {/* Área das páginas */}
         <main className="p-4 max-w-6xl mx-auto w-full">
           {children}
         </main>
