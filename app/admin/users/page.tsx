@@ -1,18 +1,58 @@
 "use client";
-import BackButton from "@/components/BackButton";
-import { useEffect, useState } from "react";
 
-export default function UsersPage(){
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+export default function UsersPage() {
   const [users, setUsers] = useState<any[]>([]);
-  useEffect(()=>{ fetch('/api/admin/users').then(r=>r.json()).then(j=>setUsers(j.users||[])).catch(()=>setUsers([])) }, []);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((r) => r.json())
+      .then((j) => setUsers(j.users || []))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
-    <div>
-      <BackButton />
-      <h2 className="text-2xl font-bold">Utilizadores</h2>
-      <div className="mt-4">
-        {users.length === 0 && <div className="text-zinc-400">Nenhum utilizador</div>}
-        {users.map((u,i)=>(<div key={i} className="p-2 bg-zinc-900 border border-zinc-800 rounded mb-2">{u.email} • {u.role}</div>))}
-      </div>
-    </div>
+    <main className="p-6 max-w-5xl mx-auto">
+
+      {/* TÍTULO */}
+      <header className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-red-500">Usuários</h1>
+          <p className="text-zinc-400 mt-1">Gerenciamento de administradores do painel.</p>
+        </div>
+
+        <Link
+          href="/admin/register"
+          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow"
+        >
+          ➕ Novo Usuário
+        </Link>
+      </header>
+
+      {/* LISTA */}
+      <section className="space-y-3">
+        {loading && <p className="text-zinc-500">Carregando...</p>}
+
+        {!loading && users.length === 0 && (
+          <p className="text-zinc-500">Nenhum usuário registrado.</p>
+        )}
+
+        {users.map((user, i) => (
+          <div
+            key={i}
+            className="p-4 bg-zinc-900 border border-zinc-800 rounded-lg"
+          >
+            <div className="font-semibold text-red-400">{user.email}</div>
+            <div className="text-sm text-zinc-400">Cargo: {user.role}</div>
+            <div className="text-xs text-zinc-500">
+              Criado em: {user.createdAt ?? "–––"}
+            </div>
+          </div>
+        ))}
+      </section>
+    </main>
   );
 }
