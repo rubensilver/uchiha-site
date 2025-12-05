@@ -1,32 +1,29 @@
+// app/api/auth/me/route.ts
 import { NextResponse } from "next/server";
 import { verifyToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
-    // Ler cookies manualmente
-    const cookieHeader = req.headers.get("cookie") || "";
-    const cookies = Object.fromEntries(
-      cookieHeader.split(";").map((c) => {
-        const [key, ...v] = c.trim().split("=");
-        return [key, v.join("=")];
-      })
-    );
-
-    const token = cookies["session_token"];
+    const cookieStore = cookies();
+    const token = cookieStore.get("session_token")?.value;
 
     if (!token) {
-      return NextResponse.json({ authenticated: false, user: null });
+      return NextResponse.json({
+        authenticated: false,
+        user: null,
+      });
     }
 
-    // Verificar JWT
     const decoded: any = verifyToken(token);
 
-    // Se não for objeto → inválido
     if (!decoded || typeof decoded !== "object") {
-      return NextResponse.json({ authenticated: false, user: null });
+      return NextResponse.json({
+        authenticated: false,
+        user: null,
+      });
     }
 
-    // Retorno seguro
     return NextResponse.json({
       authenticated: true,
       user: {
@@ -34,7 +31,6 @@ export async function GET(req: Request) {
         role: decoded.role || "admin",
       },
     });
-
   } catch (err) {
     console.error("ME ENDPOINT ERROR:", err);
 
