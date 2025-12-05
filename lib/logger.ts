@@ -1,46 +1,41 @@
-// lib/logger.ts
-"use server";
+import fs from 'fs';
+import path from 'path';
 
-import fs from "fs";
-import path from "path";
+const DATA = path.join(process.cwd(), 'data');
+if (!fs.existsSync(DATA)) fs.mkdirSync(DATA, { recursive: true });
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const LOG_FILE = path.join(DATA_DIR, "logs.json");
+const LOG_FILE = path.join(DATA, 'logs.json');
 
-// garante que a pasta existe no servidor
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
-
-// garante que o arquivo exista
-if (!fs.existsSync(LOG_FILE)) {
-  fs.writeFileSync(LOG_FILE, "[]", "utf8");
-}
-
-// grava um log
-export function addLog(entry: any) {
+// ⛔ Agora é async
+export async function addLog(entry: any) {
   try {
-    const raw = fs.readFileSync(LOG_FILE, "utf8");
-    const current = JSON.parse(raw);
+    const exists = fs.existsSync(LOG_FILE);
+    const current = exists
+      ? JSON.parse(fs.readFileSync(LOG_FILE, 'utf-8'))
+      : [];
 
-    current.unshift({
-      ...entry,
-      createdAt: new Date().toISOString(),
-    });
+    current.unshift(entry);
 
-    fs.writeFileSync(LOG_FILE, JSON.stringify(current.slice(0, 300), null, 2));
+    fs.writeFileSync(
+      LOG_FILE,
+      JSON.stringify(current.slice(0, 1000), null, 2),
+      'utf-8'
+    );
   } catch (e) {
-    console.error("Logger error:", e);
+    console.error('logger error', e);
   }
 }
 
-// lê logs
-export function getLogs(limit = 200) {
+// ⛔ Agora também é async
+export async function getLogs(limit = 100) {
   try {
-    const raw = fs.readFileSync(LOG_FILE, "utf8");
-    const current = JSON.parse(raw);
+    const exists = fs.existsSync(LOG_FILE);
+    const current = exists
+      ? JSON.parse(fs.readFileSync(LOG_FILE, 'utf-8'))
+      : [];
+
     return current.slice(0, limit);
-  } catch {
+  } catch (e) {
     return [];
   }
 }
