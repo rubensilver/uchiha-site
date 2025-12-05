@@ -1,21 +1,25 @@
-'use client';
+"use client";
 
 import "./globals.css";
 import "./theme.css";
 import { useState, useEffect } from "react";
 import Router from "next/router";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true);       // Preloader inicial
-  const [pageLoading, setPageLoading] = useState(false); // Loader de navegação
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
 
-  // 🟥 1 — PRELOADER AO ACESSAR O SITE
+  // PRELOADER INICIAL
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1900);
+    const timer = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
-  // 🟥 2 — LOADER AO MUDAR DE PÁGINA
+  // LOADER DURANTE NAVEGAÇÃO
   useEffect(() => {
     Router.events.on("routeChangeStart", () => setPageLoading(true));
     Router.events.on("routeChangeComplete", () => setPageLoading(false));
@@ -29,10 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }, []);
 
   return (
-    <html lang="pt">
-      <body className="bg-[var(--bg)] text-[var(--text)]">
+    <html lang="pt" suppressHydrationWarning={true}>
+      <body className="transition-colors duration-300 bg-[var(--bg)] text-[var(--text)]">
 
-        {/* 🔥 PRELOADER INICIAL */}
+        {/* PRELOADER INICIAL */}
         {loading && (
           <div className="loader-screen">
             <img src="/sharingan-spin.svg" className="loader-icon" />
@@ -40,55 +44,50 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         )}
 
-        {/* 🔥 LOADER DE NAVEGAÇÃO */}
+        {/* LOADER DE NAVEGAÇÃO */}
         {pageLoading && (
           <div className="page-loader">
             <img src="/sharingan-small.svg" className="page-loader-icon" />
           </div>
         )}
 
-        {/* 🔥 CONTEÚDO NORMAL */}
+        {/* CONTEÚDO */}
         {!loading && children}
 
+        {/* ESTILOS GLOBAIS DO LAYOUT */}
         <style jsx global>{`
-          /* Fundo do Preloader */
           .loader-screen {
             position: fixed;
             inset: 0;
-            background: black;
+            background: var(--bg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeIn 0.3s ease;
           }
 
-          /* Ícone Girando */
           .loader-icon {
             width: 90px;
             height: 90px;
-            animation: spin 1.2s linear infinite;
+            animation: spin 1s linear infinite;
           }
 
           .loader-text {
-            margin-top: 18px;
-            color: red;
-            font-size: 1.1rem;
-            opacity: 0.8;
+            margin-top: 16px;
+            color: var(--accent);
           }
 
-          /* Loader em mudança de página */
           .page-loader {
             position: fixed;
             top: 12px;
             right: 12px;
             z-index: 9999;
-            background: rgba(0,0,0,0.45);
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px);
             padding: 10px;
             border-radius: 50%;
-            border: 1px solid red;
+            border: 1px solid var(--accent);
           }
 
           .page-loader-icon {
@@ -98,16 +97,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }
 
           @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-
-          @keyframes fadeIn {
-            from { opacity:0; }
-            to { opacity:1; }
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
           }
         `}</style>
-
       </body>
     </html>
   );
