@@ -1,0 +1,42 @@
+.panel-sidebar {
+  width: 65px;
+  padding: 14px 10px;
+  background: #0d0d0d;
+  color: white;
+  overflow: hidden;
+  transition: width .25s ease;
+  border-right: 1px solid #2a0000;
+}
+
+.panel-sidebar:hover {
+  width: 200px;
+}
+
+.panel-title span {
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+.panel-sidebar:hover .panel-title span {
+  opacity: 1;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(255, 0, 0, 0.05);
+  border-radius: 8px;
+  transition: 0.25s;
+}
+
+nav a:hover {
+  background: rgba(255, 0, 0, 0.25);
+}
