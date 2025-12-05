@@ -5,21 +5,25 @@ import "./theme.css";
 import { useState, useEffect } from "react";
 import Router from "next/router";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
 
-  // PRELOADER INICIAL
+  // 1️⃣ Aplicar tema salvo antes de tudo
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("site-theme") || "dark";
+      document.documentElement.setAttribute("data-theme", saved);
+    } catch {}
+  }, []);
+
+  // 2️⃣ Preloader inicial
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
-  // LOADER DURANTE NAVEGAÇÃO
+  // 3️⃣ Loader de navegação
   useEffect(() => {
     Router.events.on("routeChangeStart", () => setPageLoading(true));
     Router.events.on("routeChangeComplete", () => setPageLoading(false));
@@ -54,7 +58,6 @@ export default function RootLayout({
         {/* CONTEÚDO */}
         {!loading && children}
 
-        {/* ESTILOS GLOBAIS DO LAYOUT */}
         <style jsx global>{`
           .loader-screen {
             position: fixed;
@@ -97,14 +100,11 @@ export default function RootLayout({
           }
 
           @keyframes spin {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
           }
         `}</style>
+
       </body>
     </html>
   );
