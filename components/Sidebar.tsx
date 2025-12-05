@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-export default function Sidebar() {
+export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?: string; forceMode?: boolean }) {
   const [open, setOpen] = useState(false);
 
   return (
