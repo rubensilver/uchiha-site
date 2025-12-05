@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
-import { DB } from "@/lib/db";
+import { getLogs } from "@/lib/logger";
 
-export async function GET(){
-  const logs = DB.logs.all();
-  return NextResponse.json({ logs });
+export async function GET() {
+  try {
+    const logs = getLogs(200); // pega até 200 logs
+    return NextResponse.json({ logs });
+  } catch (e) {
+    console.error("Logs API error:", e);
+    return NextResponse.json({ logs: [] });
+  }
 }
