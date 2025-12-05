@@ -1,94 +1,37 @@
-// lib/db.ts
-import fs from 'fs';
-import path from 'path';
-
-// Pasta /data
-const DATA_DIR = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-
-// Helpers
-function p(file: string) {
-  return path.join(DATA_DIR, file);
-}
-
-function load(file: string) {
-  const fp = p(file);
-  if (!fs.existsSync(fp)) return [];
-  try {
-    return JSON.parse(fs.readFileSync(fp, 'utf8'));
-  } catch {
-    return [];
-  }
-}
-
-function save(file: string, data: any) {
-  fs.writeFileSync(p(file), JSON.stringify(data, null, 2), 'utf8');
-}
-
-// Banco de usuários
-export const DB = {
-  users: {
-    all: () => load('users.json'),
-    save: (d: any) => save('users.json', d),
-  },
-  messages: {
-    all: () => load('messages.json'),
-    save: (d: any) => save('messages.json', d),
-  }
-};
-
-// lib/db.ts
-import fs from 'fs';
-import path from 'path';
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-
-function p(file: string) {
-  return path.join(DATA_DIR, file);
-}
-
-function load(file: string) {
-  const fp = p(file);
-  if (!fs.existsSync(fp)) return [];
-  try {
-    return JSON.parse(fs.readFileSync(fp, 'utf8'));
-  } catch {
-    return [];
-  }
-}
-
-function save(file: string, data: any) {
-  fs.writeFileSync(p(file), JSON.stringify(data, null, 2), 'utf8');
-}
+// lib/db.ts — versão segura para serverless
+let users: any[] = [];
+let logs: any[] = [];
+let messages: any[] = [];
 
 export function addUser(user: any) {
-  const users = load('users.json');
   users.push(user);
-  save('users.json', users);
   return user;
 }
 
 export function findUser(email: string) {
-  const users = load('users.json');
-  return users.find((u: any) => u.email === email);
+  return users.find((u) => u.email === email);
 }
 
 export const DB = {
   users: {
-    all: () => load('users.json'),
-    save: (d: any) => save('users.json', d),
+    all: () => users,
+    save: (d: any[]) => (users = d),
   },
   messages: {
-    all: () => load('messages.json'),
-    save: (d: any) => save('messages.json', d),
+    all: () => messages,
+    save: (d: any[]) => (messages = d),
   },
   logs: {
-    all: () => load('logs.json'),
-    save: (d: any) => save('logs.json', d),
+    all: () => logs,
+    save: (d: any[]) => (logs = d),
   },
 };
+
 export function addLog(data: any) {
-  console.log("[LOG]", data);
+  logs.unshift({
+    ...data,
+    createdAt: new Date().toISOString(),
+  });
+  logs = logs.slice(0, 1000);
   return true;
 }
