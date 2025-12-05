@@ -1,0 +1,29 @@
+.panel-sidebar {
+  width: 230px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #1a0000, #0d0000);
+  color: white;
+  border-right: 1px solid #500000;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+nav a {
+  display: block;
+  padding: 12px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #550000;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: all .25s;
+}
+
+nav a:hover {
+  background: rgba(255, 0, 0, 0.3);
+  border-color: #aa0000;
+}
