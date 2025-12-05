@@ -1,7 +1,8 @@
 'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { useState } from 'react';
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -10,13 +11,13 @@ export default function Sidebar() {
     <>
       {/* BOTÃO MOBILE */}
       <button
-        className="sidebar-toggle"
+        className="mobile-toggle"
         onClick={() => setOpen(!open)}
       >
         ☰
       </button>
 
-      {/* SIDEBAR PRINCIPAL */}
+      {/* SIDEBAR */}
       <aside className={`panel-sidebar ${open ? 'open' : ''}`}>
         <div className="panel-title">
           <div className="icon-box">
@@ -39,6 +40,7 @@ export default function Sidebar() {
         </div>
 
         <style jsx>{`
+          /* SIDEBAR DESKTOP */
           .panel-sidebar {
             width: 230px;
             padding: 18px 14px;
@@ -46,23 +48,10 @@ export default function Sidebar() {
             color: #fff;
             min-height: 100vh;
             box-shadow: 2px 0 0 rgba(255, 0, 0, 0.12) inset;
-            transition: transform .25s ease;
+            transition: transform .28s ease;
           }
 
-          /* MOBILE fechado */
-          @media(max-width: 900px){
-            .panel-sidebar {
-              position: fixed;
-              top: 0;
-              left: 0;
-              transform: translateX(-260px);
-              z-index: 200;
-            }
-            .panel-sidebar.open {
-              transform: translateX(0);
-            }
-          }
-
+          /* Título */
           .panel-title {
             display: flex;
             align-items: center;
@@ -98,7 +87,6 @@ export default function Sidebar() {
             padding: 10px 8px;
             border-radius: 6px;
             transition: background .25s;
-            display: block;
           }
 
           nav a:hover {
@@ -109,24 +97,34 @@ export default function Sidebar() {
             margin-top: 30px;
           }
 
-          /* BOTÃO MOBILE */
-          .sidebar-toggle {
+          /* ------ MOBILE ------ */
+          .mobile-toggle {
             display: none;
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 50;
+            background: #7b0000;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            border: 1px solid #b91c1c;
           }
 
           @media(max-width: 900px){
-            .sidebar-toggle {
+            .mobile-toggle { display: block; }
+
+            .panel-sidebar {
               position: fixed;
-              top: 12px;
-              left: 12px;
-              z-index: 300;
-              background: #3b0000;
-              border: 1px solid #7b0000;
-              color: #fff;
-              padding: 8px 10px;
-              border-radius: 6px;
-              font-size: 20px;
-              display: block;
+              top: 0;
+              left: 0;
+              height: 100vh;
+              transform: translateX(-100%);
+            }
+
+            .panel-sidebar.open {
+              transform: translateX(0);
             }
           }
         `}</style>
