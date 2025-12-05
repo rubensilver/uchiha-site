@@ -1,26 +1,46 @@
-import fs from 'fs';
-import path from 'path';
+// lib/logger.ts
+"use server";
 
-const DATA = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA)) fs.mkdirSync(DATA, { recursive: true });
+import fs from "fs";
+import path from "path";
 
-const LOG_FILE = path.join(DATA, 'logs.json');
+const DATA_DIR = path.join(process.cwd(), "data");
+const LOG_FILE = path.join(DATA_DIR, "logs.json");
 
+// garante que a pasta existe no servidor
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+// garante que o arquivo exista
+if (!fs.existsSync(LOG_FILE)) {
+  fs.writeFileSync(LOG_FILE, "[]", "utf8");
+}
+
+// grava um log
 export function addLog(entry: any) {
   try {
-    const current = fs.existsSync(LOG_FILE) ? JSON.parse(fs.readFileSync(LOG_FILE, 'utf-8')) : [];
-    current.unshift(entry);
-    fs.writeFileSync(LOG_FILE, JSON.stringify(current.slice(0,1000), null, 2), 'utf-8');
+    const raw = fs.readFileSync(LOG_FILE, "utf8");
+    const current = JSON.parse(raw);
+
+    current.unshift({
+      ...entry,
+      createdAt: new Date().toISOString(),
+    });
+
+    fs.writeFileSync(LOG_FILE, JSON.stringify(current.slice(0, 300), null, 2));
   } catch (e) {
-    console.error('logger error', e);
+    console.error("Logger error:", e);
   }
 }
 
-export function getLogs(limit = 100) {
+// lê logs
+export function getLogs(limit = 200) {
   try {
-    const current = fs.existsSync(LOG_FILE) ? JSON.parse(fs.readFileSync(LOG_FILE, 'utf-8')) : [];
+    const raw = fs.readFileSync(LOG_FILE, "utf8");
+    const current = JSON.parse(raw);
     return current.slice(0, limit);
-  } catch (e) {
+  } catch {
     return [];
   }
 }
