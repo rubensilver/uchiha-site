@@ -1,8 +1,8 @@
-// app/admin/messages/page.tsx
 "use client";
+
 import { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton";
-import MessagesList from "@/components/MessagesList";
+import MessageViewer from "./MessageViewer";
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<any[]>([]);
@@ -16,20 +16,24 @@ export default function MessagesPage() {
   }, []);
 
   return (
-    <main className="p-6 max-w-5xl mx-auto">
+    <main className="p-6 max-w-4xl mx-auto">
       <BackButton />
 
-      <h1 className="text-3xl font-bold text-red-500 mb-6">Mensagens</h1>
+      <h1 className="text-3xl font-bold text-red-500 mb-5">
+        Mensagens Recebidas & Enviadas
+      </h1>
 
-      {loading && <p className="text-zinc-500">Carregando...</p>}
+      {loading && <p className="text-zinc-400">Carregando mensagens...</p>}
 
       {!loading && messages.length === 0 && (
-        <p className="text-zinc-500">Nenhuma mensagem encontrada.</p>
+        <p className="text-zinc-400">Nenhuma mensagem encontrada.</p>
       )}
 
-      {!loading && messages.length > 0 && (
-        <MessagesList messages={messages} />
-      )}
+      <div className="space-y-3 mt-4">
+        {messages.map((msg, i) => (
+          <MessageViewer key={i} msg={msg} />
+        ))}
+      </div>
     </main>
   );
 }
