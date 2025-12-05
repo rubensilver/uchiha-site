@@ -1,10 +1,9 @@
-// app/api/auth/me/route.ts
 import { NextResponse } from "next/server";
 import { verifyToken } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {
-    // pegar cookie
+    // Ler cookies manualmente
     const cookieHeader = req.headers.get("cookie") || "";
     const cookies = Object.fromEntries(
       cookieHeader.split(";").map((c) => {
@@ -19,23 +18,26 @@ export async function GET(req: Request) {
       return NextResponse.json({ authenticated: false, user: null });
     }
 
-    // validar jwt
-    const decoded = verifyToken(token);
+    // Verificar JWT
+    const decoded: any = verifyToken(token);
 
-    if (!decoded) {
+    // Se não for objeto → inválido
+    if (!decoded || typeof decoded !== "object") {
       return NextResponse.json({ authenticated: false, user: null });
     }
 
-    // devolver dados seguros
+    // Retorno seguro
     return NextResponse.json({
       authenticated: true,
       user: {
-        email: decoded.email,
-        role: decoded.role,
+        email: decoded.email || null,
+        role: decoded.role || "admin",
       },
     });
+
   } catch (err) {
     console.error("ME ENDPOINT ERROR:", err);
+
     return NextResponse.json({
       authenticated: false,
       user: null,
