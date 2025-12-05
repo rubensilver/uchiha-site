@@ -32,6 +32,10 @@ export default function UsersPage() {
         </Link>
       </header>
 
+      <a href="/admin/users/create" className="px-4 py-2 bg-red-600 rounded">
+  Criar Usuário
+</a>
+      
       {/* LISTA */}
       <section className="space-y-3">
         {loading && <p className="text-zinc-500">Carregando...</p>}
