@@ -1,44 +1,55 @@
 "use client";
-import BackButton from "@/components/BackButton";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 
 export default function ThemePage() {
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState("dark");
+  const themes = [
+    { id: "light", name: "Claro", color: "#f3f3f3" },
+    { id: "dark", name: "Escuro", color: "#0e0e0e" },
+    { id: "uchiha", name: "Uchiha", color: "#b91c1c" },
+  ];
 
-  function changeTheme(t: string) {
+  useEffect(() => {
+    const t = localStorage.getItem("site-theme") || "dark";
     setTheme(t);
-    localStorage.setItem("theme", t);
-    document.body.className = t;
+  }, []);
+
+  function apply(t: string) {
+    localStorage.setItem("site-theme", t);
+    setTheme(t);
+    window.location.reload();
   }
 
   return (
-    <div className="p-6 text-center text-white">
-      <BackButton />
+    <div className="p-6">
 
-      <h1 className="text-4xl font-bold mb-6">Trocar Tema</h1>
+      <h1 className="text-3xl font-bold text-red-500 mb-6">
+        Tema do Painel
+      </h1>
 
-      <div className="flex gap-4 justify-center">
-        <button
-          onClick={() => changeTheme("light")}
-          className="bg-gray-200 text-black px-6 py-3 rounded hover:scale-105 transition"
-        >
-          Claro
-        </button>
+      <p className="text-zinc-400 mb-4">
+        Escolha o visual preferido para o painel administrativo.
+      </p>
 
-        <button
-          onClick={() => changeTheme("dark")}
-          className="bg-gray-900 text-white px-6 py-3 rounded hover:scale-105 transition"
-        >
-          Escuro
-        </button>
-
-        <button
-          onClick={() => changeTheme("uchiha")}
-          className="bg-red-700 text-white px-6 py-3 rounded hover:scale-105 transition"
-        >
-          Uchiha
-        </button>
+      <div className="grid sm:grid-cols-3 gap-4">
+        {themes.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => apply(t.id)}
+            className={`p-5 rounded-lg border transition
+              ${theme === t.id ? "border-red-600 bg-red-600/20" : "border-zinc-700 bg-zinc-900"}
+            `}
+          >
+            <div
+              className="w-6 h-6 rounded-full mb-2 mx-auto"
+              style={{ background: t.color }}
+            />
+            <div className="text-center font-semibold">{t.name}</div>
+          </button>
+        ))}
       </div>
+
     </div>
   );
 }
