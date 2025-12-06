@@ -54,7 +54,18 @@ export default function SidebarMinimal() {
             </li>
           </ul>
         </nav>
-
+{
+  title: "Configurações",
+  children: [
+    { title: "Sidebar", href: "/admin/config/sidebar-preview" },
+    { title: "Tema", href: "/admin/config/theme" },
+    { title: "Webhook", href: "/admin/config/webhook" },
+    { title: "Conta", href: "/admin/config/account" },
+    { title: "Aparência", href: "/admin/config/appearance" },
+    { title: "Segurança", href: "/admin/config/security" },
+  ]
+        }
+        
         <div className="panel-theme">
           <ThemeSwitcher />
         </div>
