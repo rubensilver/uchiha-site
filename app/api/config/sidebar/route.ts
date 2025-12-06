@@ -15,8 +15,12 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const { mode } = await req.json();
+
     if (!mode) {
-      return NextResponse.json({ error: "missing mode" }, { status: 400 });
+      return NextResponse.json(
+        { error: "missing mode" },
+        { status: 400 }
+      );
     }
 
     setSidebarStyle(mode);
