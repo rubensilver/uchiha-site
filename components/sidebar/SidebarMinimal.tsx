@@ -31,7 +31,8 @@ export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?
           </div>
           <span>BOT ZONE</span>
         </div>
-
+<aside className={`panel-sidebar style-${mode} ${open ? "open" : ""}`}>
+  
         <nav>
           <ul>
             <li><Link href="/admin/dashboard" onClick={() => setOpen(false)}>📊 Dashboard</Link></li>
