@@ -1,8 +1,12 @@
-export default function AppearanceConfigPage() {
+// app/admin/config/appearance/page.tsx
+import Link from "next/link";
+
+export default function Page() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-2">Configurações de Aparência</h1>
-      <p className="text-zinc-400">Gerencie elementos visuais da interface.</p>
+    <div>
+      <Link href="/admin/config">← Voltar</Link>
+      <h1 className="text-2xl font-bold mb-4">Aparência</h1>
+      <p className="text-zinc-400">Ajustes visuais do painel.</p>
     </div>
   );
 }
