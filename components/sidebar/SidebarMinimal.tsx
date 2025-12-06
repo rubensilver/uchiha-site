@@ -1,27 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import "@/components/sidebar-styles/minimal.css";
+import { useState } from "react";
+import Link from "next/link";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
-export default function Sidebar({
-  mode = "minimal",
-  forceMode = false
-}: {
-  mode?: string;
-  forceMode?: boolean;
-}) {
+export default function SidebarMinimal() {
   const [open, setOpen] = useState(false);
-
-  const appliedMode = forceMode ? mode : mode;
 
   return (
     <>
+      {/* BOTÃO MOBILE */}
       <button className="mobile-toggle" onClick={() => setOpen(!open)}>
         ☰
       </button>
 
-      <aside className={`panel-sidebar style-${appliedMode} ${open ? "open" : ""}`}>
+      {/* SIDEBAR */}
+      <aside className={`panel-sidebar style-minimal ${open ? "open" : ""}`}>
         <div className="panel-title">
           <div className="icon-box">
             <img src="/sharingan-small.svg" className="w-5 h-5" />
@@ -31,10 +26,26 @@ export default function Sidebar({
 
         <nav>
           <ul>
-            <li><Link href="/admin/dashboard" onClick={() => setOpen(false)}>📊 Dashboard</Link></li>
-            <li><Link href="/admin/theme" onClick={() => setOpen(false)}>🎨 Temas</Link></li>
-            <li><Link href="/admin/logs" onClick={() => setOpen(false)}>📜 Logs</Link></li>
-            <li><Link href="/admin/config" onClick={() => setOpen(false)}>⚙️ Configurações</Link></li>
+            <li>
+              <Link href="/admin/dashboard" onClick={() => setOpen(false)}>
+                📊 Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/theme" onClick={() => setOpen(false)}>
+                🎨 Temas
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/logs" onClick={() => setOpen(false)}>
+                📜 Logs
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/config" onClick={() => setOpen(false)}>
+                ⚙️ Configurações
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -44,7 +55,7 @@ export default function Sidebar({
 
         <style jsx>{`
           .panel-sidebar {
-            transition: transform .28s ease, width .28s ease;
+            transition: transform 0.28s ease, width 0.28s ease;
           }
 
           .mobile-toggle {
@@ -61,8 +72,10 @@ export default function Sidebar({
             border: 1px solid #b91c1c;
           }
 
-          @media(max-width: 900px){
-            .mobile-toggle { display: block; }
+          @media (max-width: 900px) {
+            .mobile-toggle {
+              display: block;
+            }
 
             .panel-sidebar {
               position: fixed;
