@@ -1,10 +1,10 @@
 // app/api/config/sidebar/route.ts
 import { NextResponse } from "next/server";
-import { getSidebarMode, setSidebarMode } from "@/lib/config";
+import { getSidebarStyle, setSidebarStyle } from "@/lib/config";
 
 export async function GET() {
   try {
-    const mode = getSidebarMode();
+    const mode = getSidebarStyle();
     return NextResponse.json({ mode });
   } catch (err) {
     console.error("SIDEBAR GET ERROR:", err);
@@ -17,13 +17,10 @@ export async function POST(req: Request) {
     const { mode } = await req.json();
 
     if (!mode) {
-      return NextResponse.json(
-        { error: "missing mode" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "missing mode" }, { status: 400 });
     }
 
-    setSidebarMode(mode);
+    setSidebarStyle(mode);
 
     return NextResponse.json({ success: true });
   } catch (err) {
