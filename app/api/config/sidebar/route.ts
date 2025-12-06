@@ -1,10 +1,10 @@
 // app/api/config/sidebar/route.ts
 import { NextResponse } from "next/server";
-import { getSidebarStyle, setSidebarStyle } from "@/lib/config";
+import { getSidebarMode, setSidebarMode } from "@/lib/config";
 
 export async function GET() {
   try {
-    const mode = getSidebarStyle();
+    const mode = getSidebarMode();
     return NextResponse.json({ mode });
   } catch (err) {
     console.error("SIDEBAR GET ERROR:", err);
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       );
     }
 
-    setSidebarStyle(mode);
+    setSidebarMode(mode);
 
     return NextResponse.json({ success: true });
   } catch (err) {
