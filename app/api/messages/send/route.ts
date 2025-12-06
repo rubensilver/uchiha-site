@@ -12,7 +12,9 @@ export async function POST(req: Request) {
       );
     }
 
-    const conv = DB.messages.all().find((m: any) => m.id === conversationId);
+    // busca conversa
+    const conversations = DB.messages.all();
+    const conv = conversations.find((m: any) => m.id === conversationId);
 
     if (!conv) {
       return NextResponse.json(
@@ -33,9 +35,11 @@ export async function POST(req: Request) {
     conv.updatedAt = new Date().toISOString();
     conv.unread = 0;
 
-    DB.messages.save();
+    // SALVA CORRETAMENTE AGORA ✔️
+    DB.messages.save(conversations);
 
     return NextResponse.json({ success: true });
+
   } catch (err) {
     console.error("MSG SEND ERROR:", err);
     return NextResponse.json({ success: false }, { status: 500 });
