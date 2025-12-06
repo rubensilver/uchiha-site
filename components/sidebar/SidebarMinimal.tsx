@@ -1,5 +1,8 @@
 'use client';
 
+import "@/components/sidebar-styles/minimal.css";
+import "@/components/sidebar-styles/modern.css";
+import "@/components/sidebar-styles/complete.css";
 import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
