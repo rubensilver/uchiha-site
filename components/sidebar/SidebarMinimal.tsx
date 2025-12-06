@@ -7,6 +7,9 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?: string; forceMode?: boolean }) {
   const [open, setOpen] = useState(false);
 
+  // 🔥 SE ESTIVER EM PREVIEW, ELE VAI FORÇAR O VISUAL CORRETO
+  const appliedMode = forceMode ? mode : null;
+
   return (
     <>
       {/* BOTÃO MOBILE */}
@@ -18,7 +21,7 @@ export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?
       </button>
 
       {/* SIDEBAR */}
-      <aside className={`panel-sidebar ${open ? 'open' : ''}`}>
+      <aside className={`panel-sidebar ${open ? 'open' : ''} ${appliedMode ? `sidebar-${appliedMode}` : ''}`}>
         <div className="panel-title">
           <div className="icon-box">
             <img src="/sharingan-small.svg" className="w-5 h-5" />
@@ -47,7 +50,7 @@ export default function Sidebar({ mode = "minimal", forceMode = false }: { mode?
             color: #fff;
             min-height: 100vh;
             box-shadow: 2px 0 0 rgba(255, 0, 0, 0.12) inset;
-            transition: transform .28s ease;
+            transition: transform .28s ease, width .28s ease;
           }
 
           .panel-title {
