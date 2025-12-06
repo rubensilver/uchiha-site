@@ -1,6 +1,6 @@
 // app/api/messages/route.ts
-import { NextResponse } from 'next/server';
-import { DB } from '@/lib/db';
+import { NextResponse } from "next/server";
+import { DB } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ messages });
   } catch (err) {
     console.error("MESSAGES GET ERROR:", err);
-    return NextResponse.json({ error: 'failed' }, { status: 500 });
+    return NextResponse.json({ error: "failed" }, { status: 500 });
   }
 }
 
