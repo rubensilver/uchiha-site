@@ -39,3 +39,7 @@ export function setSidebarStyle(style: string) {
   sidebarStyle = style;
   save("sidebar-style.json", { style });
 }
+
+.style-modern .panel-sidebar {
+   /* seus estilos */
+}
