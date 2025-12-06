@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // Sidebars
-import SidebarMinimal from "@/components/Sidebar";
+import SidebarMinimal from "@/components/sidebar/SidebarMinimal";
 import SidebarModern from "@/components/sidebar/SidebarModern";
 import SidebarComplete from "@/components/sidebar/SidebarComplete";
 
