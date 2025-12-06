@@ -13,7 +13,13 @@ export default function SidebarModern() {
         <Link href="/admin/logs" className="hover:text-red-400">Logs</Link>
         <Link href="/admin/config" className="hover:text-red-400">Configurações</Link>
       </nav>
-
+<Link
+  href="/admin/config/sidebar"
+  className="flex items-center gap-2 px-4 py-3 hover:bg-zinc-800 rounded-lg"
+>
+  <span>Configurar Sidebar</span>
+</Link>
+      
       <div className="mt-6">
         <ThemeSwitcher />
       </div>
