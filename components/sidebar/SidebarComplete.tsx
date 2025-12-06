@@ -20,7 +20,13 @@ export default function SidebarComplete() {
         <Link href="/admin/config">⚙️ Configurações</Link>
         <Link href="/admin/send">✉️ Enviar Mensagem</Link>
       </nav>
-
+<Link
+  href="/admin/config/sidebar"
+  className="flex items-center gap-3 px-4 py-2 hover:bg-zinc-800 rounded-lg"
+>
+  <span>Configurar Sidebar</span>
+</Link>
+      
       <div className="mt-6">
         <ThemeSwitcher />
       </div>
