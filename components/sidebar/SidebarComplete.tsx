@@ -26,6 +26,18 @@ export default function SidebarComplete() {
 >
   <span>Configurar Sidebar</span>
 </Link>
+
+      {
+  section: "Configurações",
+  links: [
+    { name: "Sidebar", href: "/admin/config/sidebar-preview" },
+    { name: "Tema", href: "/admin/config/theme" },
+    { name: "Webhook", href: "/admin/config/webhook" },
+    { name: "Conta", href: "/admin/config/account" },
+    { name: "Aparência", href: "/admin/config/appearance" },
+    { name: "Segurança", href: "/admin/config/security" },
+  ]
+      }
       
       <div className="mt-6">
         <ThemeSwitcher />
