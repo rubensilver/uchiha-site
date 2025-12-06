@@ -11,8 +11,7 @@ export default function Sidebar({
   mode?: string;
   forceMode?: boolean;
 }) {
-  // modo final a usar
-  const finalMode = mode;
+  const finalMode = forceMode ? mode : mode;
 
   if (finalMode === "modern") {
     return <SidebarModern />;
@@ -22,6 +21,5 @@ export default function Sidebar({
     return <SidebarComplete />;
   }
 
-  // padrão
   return <SidebarMinimal />;
 }
