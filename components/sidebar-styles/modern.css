@@ -27,3 +27,15 @@ nav a:hover {
   background: rgba(255, 0, 0, 0.3);
   border-color: #aa0000;
 }
+
+// -------------------- SIDEBAR STYLE (minimal | modern | complete) --------------------
+let sidebarStyle = load("sidebar-style.json")?.style || "minimal";
+
+export function getSidebarStyle() {
+  return sidebarStyle;
+}
+
+export function setSidebarStyle(style: string) {
+  sidebarStyle = style;
+  save("sidebar-style.json", { style });
+}
