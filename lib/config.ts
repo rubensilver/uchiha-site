@@ -1,13 +1,13 @@
 // lib/config.ts
 import { load, save } from "./config-storage";
 
-let sidebarMode = load("sidebar.json")?.mode || "minimal";
+let sidebarStyle = load("sidebar.json")?.mode || "minimal";
 
-export function getSidebarMode() {
-  return sidebarMode;
+export function getSidebarStyle() {
+  return sidebarStyle;
 }
 
-export function setSidebarMode(mode: string) {
-  sidebarMode = mode;
-  save("sidebar.json", { mode });
+export function setSidebarStyle(style: string) {
+  sidebarStyle = style;
+  save("sidebar.json", { mode: style });
 }
