@@ -19,6 +19,18 @@ export default function SidebarModern() {
 >
   <span>Configurar Sidebar</span>
 </Link>
+
+      {
+  label: "Configurações",
+  items: [
+    { label: "Sidebar", href: "/admin/config/sidebar-preview" },
+    { label: "Tema", href: "/admin/config/theme" },
+    { label: "Webhook", href: "/admin/config/webhook" },
+    { label: "Conta", href: "/admin/config/account" },
+    { label: "Aparência", href: "/admin/config/appearance" },
+    { label: "Segurança", href: "/admin/config/security" },
+  ]
+    }
       
       <div className="mt-6">
         <ThemeSwitcher />
