@@ -41,6 +41,6 @@ nav a:hover {
   margin-top: 40px;
 }
 
-.style-minimal .panel-sidebar { ... }
+.style-minimal .panel-sidebar {}
 .style-modern .panel-sidebar { ... }
 .style-complete .panel-sidebar { ... }
