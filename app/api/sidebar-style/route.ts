@@ -4,22 +4,22 @@ import { getSidebarStyle, setSidebarStyle } from "@/lib/config";
 export async function GET() {
   try {
     const style = getSidebarStyle();
-    return NextResponse.json({ style });
+    return NextResponse.json({ mode: style });
   } catch (err) {
     console.error("SIDEBAR STYLE GET ERROR:", err);
-    return NextResponse.json({ style: "minimal" });
+    return NextResponse.json({ mode: "minimal" });
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { style } = await req.json();
+    const { mode } = await req.json();
 
-    if (!style) {
-      return NextResponse.json({ error: "missing style" }, { status: 400 });
+    if (!mode) {
+      return NextResponse.json({ error: "missing mode" }, { status: 400 });
     }
 
-    setSidebarStyle(style);
+    setSidebarStyle(mode);
 
     return NextResponse.json({ success: true });
   } catch (err) {
