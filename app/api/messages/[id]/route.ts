@@ -1,3 +1,4 @@
+// app/api/messages/[id]/route.ts
 import { NextResponse } from "next/server";
 import { DB } from "@/lib/db";
 
@@ -11,10 +12,7 @@ export async function GET(
     const message = messages.find((m: any) => m.id === id);
 
     if (!message) {
-      return NextResponse.json(
-        { error: "Mensagem não encontrada" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Mensagem não encontrada" }, { status: 404 });
     }
 
     return NextResponse.json({ message });
