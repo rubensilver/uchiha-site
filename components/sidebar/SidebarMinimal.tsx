@@ -1,9 +1,5 @@
 'use client';
 
-import "@/components/sidebar-styles/minimal.css";
-import "@/components/sidebar-styles/modern.css";
-import "@/components/sidebar-styles/complete.css";
-
 import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
@@ -17,20 +13,14 @@ export default function Sidebar({
 }) {
   const [open, setOpen] = useState(false);
 
-  // Se for preview → força o estilo
   const appliedMode = forceMode ? mode : mode;
 
   return (
     <>
-      {/* BOTÃO MOBILE */}
-      <button
-        className="mobile-toggle"
-        onClick={() => setOpen(!open)}
-      >
+      <button className="mobile-toggle" onClick={() => setOpen(!open)}>
         ☰
       </button>
 
-      {/* SIDEBAR — APENAS UM ASIDE */}
       <aside className={`panel-sidebar style-${appliedMode} ${open ? "open" : ""}`}>
         <div className="panel-title">
           <div className="icon-box">
