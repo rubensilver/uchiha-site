@@ -15,8 +15,8 @@ export default function SidebarMinimal() {
         ☰
       </button>
 
-      {/* SIDEBAR */}
       <aside className={`panel-sidebar style-minimal ${open ? "open" : ""}`}>
+        
         <div className="panel-title">
           <div className="icon-box">
             <img src="/sharingan-small.svg" className="w-5 h-5" />
@@ -26,88 +26,67 @@ export default function SidebarMinimal() {
 
         <nav>
           <ul>
+
             <li>
-              <Link
-  href="/admin/config/sidebar"
-  className="block px-4 py-2 hover:bg-zinc-800 rounded"
->
-  Configurações → Sidebar
-</Link>
-              <Link href="/admin/dashboard" onClick={() => setOpen(false)}>
-                📊 Dashboard
-              </Link>
+              <Link href="/admin/dashboard">📊 Dashboard</Link>
             </li>
+
             <li>
-              <Link href="/admin/theme" onClick={() => setOpen(false)}>
-                🎨 Temas
-              </Link>
+              <Link href="/admin/theme">🎨 Temas</Link>
             </li>
+
             <li>
-              <Link href="/admin/logs" onClick={() => setOpen(false)}>
-                📜 Logs
-              </Link>
+              <Link href="/admin/logs">📜 Logs</Link>
             </li>
+
             <li>
-              <Link href="/admin/config" onClick={() => setOpen(false)}>
-                ⚙️ Configurações
-              </Link>
+              <Link href="/admin/send">✉️ Enviar Mensagem</Link>
             </li>
+
+            {/* CONFIGURAÇÕES */}
+            <li className="mt-4 text-red-400 font-bold">Configurações</li>
+
+            <li><Link href="/admin/config/sidebar-preview">Sidebar</Link></li>
+            <li><Link href="/admin/config/theme">Tema</Link></li>
+            <li><Link href="/admin/config/webhook">Webhook</Link></li>
+            <li><Link href="/admin/config/account">Conta</Link></li>
+            <li><Link href="/admin/config/appearance">Aparência</Link></li>
+            <li><Link href="/admin/config/security">Segurança</Link></li>
+
           </ul>
         </nav>
-{
-  title: "Configurações",
-  children: [
-    { title: "Sidebar", href: "/admin/config/sidebar-preview" },
-    { title: "Tema", href: "/admin/config/theme" },
-    { title: "Webhook", href: "/admin/config/webhook" },
-    { title: "Conta", href: "/admin/config/account" },
-    { title: "Aparência", href: "/admin/config/appearance" },
-    { title: "Segurança", href: "/admin/config/security" },
-  ]
-        }
-        
+
         <div className="panel-theme">
           <ThemeSwitcher />
         </div>
 
-        <style jsx>{`
-          .panel-sidebar {
-            transition: transform 0.28s ease, width 0.28s ease;
-          }
-
-          .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 14px;
-            left: 14px;
-            z-index: 50;
-            background: #7b0000;
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 1.2rem;
-            border: 1px solid #b91c1c;
-          }
-
-          @media (max-width: 900px) {
-            .mobile-toggle {
-              display: block;
-            }
-
-            .panel-sidebar {
-              position: fixed;
-              top: 0;
-              left: 0;
-              height: 100vh;
-              transform: translateX(-100%);
-            }
-
-            .panel-sidebar.open {
-              transform: translateX(0);
-            }
-          }
-        `}</style>
       </aside>
+
+      <style jsx>{`
+        .mobile-toggle {
+          display: none;
+          position: fixed;
+          top: 14px;
+          left: 14px;
+          z-index: 50;
+        }
+
+        @media (max-width: 900px) {
+          .mobile-toggle {
+            display: block;
+          }
+
+          .panel-sidebar {
+            position: fixed;
+            height: 100vh;
+            transform: translateX(-100%);
+          }
+
+          .panel-sidebar.open {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </>
   );
 }
