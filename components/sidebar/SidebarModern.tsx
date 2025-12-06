@@ -20,7 +20,3 @@ export default function SidebarModern() {
     </aside>
   );
 }
-
-.style-minimal .panel-sidebar { ... }
-.style-modern .panel-sidebar { ... }
-.style-complete .panel-sidebar { ... }
