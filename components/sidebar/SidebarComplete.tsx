@@ -27,3 +27,7 @@ export default function SidebarComplete() {
     </aside>
   );
 }
+
+.style-minimal .panel-sidebar { ... }
+.style-modern .panel-sidebar { ... }
+.style-complete .panel-sidebar { ... }
