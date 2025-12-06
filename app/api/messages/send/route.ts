@@ -1,9 +1,10 @@
+// app/api/messages/send/route.ts
 import { NextResponse } from "next/server";
 import { DB } from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const { conversationId, text, from } = await req.json();
+    const { conversationId, text, from } = await req.json().catch(() => ({}));
 
     if (!conversationId || !text) {
       return NextResponse.json(
@@ -12,9 +13,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // busca conversa
-    const conversations = DB.messages.all();
-    const conv = conversations.find((m: any) => m.id === conversationId);
+    // encontrar conversa
+    const messages = DB.messages.all();
+    const conv = messages.find((m: any) => m.id === conversationId);
 
     if (!conv) {
       return NextResponse.json(
@@ -22,6 +23,9 @@ export async function POST(req: Request) {
         { status: 404 }
       );
     }
+
+    // garante que history exista
+    if (!Array.isArray(conv.history)) conv.history = [];
 
     // adiciona no histórico
     conv.history.push({
@@ -35,11 +39,10 @@ export async function POST(req: Request) {
     conv.updatedAt = new Date().toISOString();
     conv.unread = 0;
 
-    // SALVA CORRETAMENTE AGORA ✔️
-    DB.messages.save(conversations);
+    // salvar todo o array de mensagens atualizado
+    DB.messages.save(messages);
 
     return NextResponse.json({ success: true });
-
   } catch (err) {
     console.error("MSG SEND ERROR:", err);
     return NextResponse.json({ success: false }, { status: 500 });
