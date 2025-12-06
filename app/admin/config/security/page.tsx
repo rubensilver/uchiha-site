@@ -1,8 +1,12 @@
-export default function SecurityConfigPage() {
+// app/admin/config/security/page.tsx
+import Link from "next/link";
+
+export default function Page() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-2">Configurações de Segurança</h1>
-      <p className="text-zinc-400">Gerencie níveis de acesso e segurança.</p>
+    <div>
+      <Link href="/admin/config">← Voltar</Link>
+      <h1 className="text-2xl font-bold mb-4">Segurança</h1>
+      <p className="text-zinc-400">Opções de segurança e autenticação.</p>
     </div>
   );
 }
