@@ -1,14 +1,10 @@
+// lib/config.ts
 import { load, save } from "./config-storage";
 
-// 🔥 Mantém ambos, para compatibilidade
 let sidebarMode = load("sidebar.json")?.mode || "minimal";
 
 // --------------- COMPATIBILIDADE ANTIGA (NÃO MEXE) ----------------
-
-// Essas funções são necessárias porque outros arquivos do projeto
-// ainda importam "getSidebarStyle" e "setSidebarStyle".
-// Elas APENAS chamam as novas funções para evitar erro.
-
+// Alguns lugares do projeto ainda importam getSidebarStyle / setSidebarStyle
 export function getSidebarStyle() {
   return sidebarMode;
 }
@@ -18,8 +14,7 @@ export function setSidebarStyle(style: string) {
   save("sidebar.json", { mode: style });
 }
 
-// --------------- NOVO PADRÃO (QUE VOCÊ CRIOU) ---------------------
-
+// --------------- NOVO PADRÃO (getSidebarMode) ---------------------
 export function getSidebarMode() {
   return sidebarMode;
 }
