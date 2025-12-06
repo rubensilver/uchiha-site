@@ -27,6 +27,12 @@ export default function SidebarMinimal() {
         <nav>
           <ul>
             <li>
+              <Link
+  href="/admin/config/sidebar"
+  className="block px-4 py-2 hover:bg-zinc-800 rounded"
+>
+  Configurações → Sidebar
+</Link>
               <Link href="/admin/dashboard" onClick={() => setOpen(false)}>
                 📊 Dashboard
               </Link>
