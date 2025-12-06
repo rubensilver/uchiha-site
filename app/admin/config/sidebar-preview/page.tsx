@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Sidebar from "@/components/sidebar/SidebarMinimal";
+import Sidebar from "@/components/Sidebar";
 
 export default function SidebarPreview() {
   const [mode, setMode] = useState("minimal");
@@ -86,4 +86,4 @@ export default function SidebarPreview() {
       </div>
     </div>
   );
-                           }
+}
