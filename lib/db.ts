@@ -30,7 +30,6 @@ export const DB = {
     save: (d: any[]) => (logs = d),
   },
 
-  // 🔥 AGORA O TEMA EXISTE! (consertando o erro)
   theme: {
     get() {
       return load("theme.json");
