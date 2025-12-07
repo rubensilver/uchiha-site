@@ -1,6 +1,6 @@
 // app/api/painel-bot/status/route.ts
 import { NextResponse } from "next/server";
-import { verifyToken } from "../../../lib/jwt";
+import { verifyToken } from "@/app/lib/jwt";
 
 export async function GET(req: Request) {
   // Read cookie pb_token from headers
