@@ -1,0 +1,7 @@
+/* app/painel-bot/globals.css */
+* { box-sizing: border-box; margin:0; padding:0; }
+html,body { height:100%; font-family: Inter, system-ui, sans-serif; }
+.uchiha-bg { min-height:100vh; background: radial-gradient(circle,#3b0000 0%, #090909 60%); color:#fff; padding:24px; }
+.card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,0,0,0.12); padding:16px; border-radius:10px; }
+input, button { font-size:16px; }
+.btn-uchiha { background:linear-gradient(90deg,#b30000,#ff2b2b); color:white; padding:10px 14px; border:none; border-radius:8px; }
