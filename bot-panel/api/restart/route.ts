@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyAuth } from "@/utils/auth";
+import { verifyAuth } from '../../../utils/auth';
 
 export async function POST(req: Request) {
   const auth = verifyAuth(req.headers);
