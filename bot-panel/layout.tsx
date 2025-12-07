@@ -1,18 +1,12 @@
 export const metadata = {
-  title: "Uchiha Bot Panel",
+  title: "Uchiha Panel",
+  description: "Painel Oficial do Bot Uchiha",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: any) {
   return (
     <html lang="pt">
-      <body
-        style={{
-          margin: 0,
-          background: "#000",
-          color: "#fff",
-          fontFamily: "sans-serif",
-        }}
-      >
+      <body className="uchiha-bg">
         {children}
       </body>
     </html>
