@@ -1,6 +1,6 @@
 // app/api/painel-bot/auth/verify/route.ts
 import { NextResponse } from "next/server";
-import { signToken } from "../../../../lib/jwt";
+import { signToken, verifyToken } from "@/app/lib/jwt";
 
 // NOTE: In your repo adjust import if needed. If your helper path is app/lib/jwt.ts then "@/lib/jwt" works when tsconfig baseUrl/paths set.
 // If you don't have path alias, replace with relative: import { signToken } from "../../../lib/jwt";
