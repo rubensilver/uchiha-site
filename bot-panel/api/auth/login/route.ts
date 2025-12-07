@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateToken } from "@/utils/auth";
+import { generateToken } from '../../../utils/auth';
 
 export async function POST(req: Request) {
   const { user, pass } = await req.json();
