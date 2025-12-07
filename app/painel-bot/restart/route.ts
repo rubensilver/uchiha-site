@@ -1,6 +1,6 @@
 // app/api/painel-bot/restart/route.ts
 import { NextResponse } from "next/server";
-import { verifyToken } from "../../../lib/jwt";
+import { verifyToken } from "@/app/lib/jwt";
 
 export async function POST(req: Request) {
   const cookie = (req.headers as any).get?.("cookie") || "";
