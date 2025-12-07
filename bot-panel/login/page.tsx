@@ -1,50 +1,75 @@
 "use client";
+
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
 
-  async function login() {
-    const req = await fetch("/api/auth/login", {
+  const handleLogin = async () => {
+    setError("");
+
+    const req = await fetch("/api/panel/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user, pass }),
     });
 
-    const data = await req.json();
+    const res = await req.json();
 
-    if (!req.ok) return setError(data.error);
+    if (req.status !== 200) {
+      setError(res.error || "Credenciais inválidas");
+      return;
+    }
 
-    sessionStorage.setItem("token", data.token);
-    router.push("/bot-panel/dashboard");
-  }
+    window.location.href = "/bot-panel/dashboard";
+  };
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Painel Uchiha – Login</h1>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20
+      }}
+    >
+      <div className="card" style={{ width: 350, textAlign: "center" }}>
+        
+        {/* Logo sharingan */}
+        <img
+          src="https://i.imgur.com/iea4t8v.png"
+          width="110"
+          className="sharingan"
+          style={{ marginBottom: 15 }}
+        />
 
-      <input
-        placeholder="Usuário"
-        value={user}
-        onChange={(e) => setUser(e.target.value)}
-        style={{ display: "block" }}
-      />
+        <h2 style={{ marginBottom: 15 }}>Painel Uchiha</h2>
 
-      <input
-        type="password"
-        placeholder="Senha"
-        value={pass}
-        onChange={(e) => setPass(e.target.value)}
-        style={{ display: "block" }}
-      />
+        <input
+          placeholder="Usuário"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+        />
 
-      <button onClick={login}>Entrar</button>
+        <input
+          type="password"
+          placeholder="Senha"
+          style={{ marginTop: 10 }}
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+        />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && (
+          <p style={{ color: "red", marginTop: 10, fontSize: 14 }}>{error}</p>
+        )}
+
+        <button className="btn-uchiha" onClick={handleLogin}>
+          Entrar
+        </button>
+      </div>
     </div>
   );
 }
