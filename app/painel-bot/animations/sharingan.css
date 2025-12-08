@@ -1,0 +1,11 @@
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.sharingan {
+  width:64px;
+  height:64px;
+  background:url('/sharingan.png');
+  animation: spin 2s linear infinite;
+}
