@@ -1,5 +1,6 @@
+// app/painel-bot/layout.tsx
 import React from 'react';
-import '../../globals.css';
+import '../globals.css'; // CORRIGIDO: estava '../../globals.css'
 export const metadata = { title: 'Painel Bot Pro' };
 export default function PainelLayout({ children }: { children: React.ReactNode }) {
   return (
