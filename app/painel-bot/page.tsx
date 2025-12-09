@@ -1,30 +1,53 @@
 import Link from 'next/link';
-export default function Home() {
+
+export default function PainelBotHome() {
   return (
-    <div>
-      <h1 style={{fontSize:28}}>Painel Bot — Acesso Rápido</h1>
-      <p className="small">Área exclusiva para gestão e controlo do teu Bot.</p>
-      <div style={{marginTop:12}} className="grid">
-        <div className="card">
-          <h3>Entrar</h3>
-          <p className="small">Login seguro (Email + PIN)</p>
-          <Link href="/painel-bot/login"><button className="btn">Acessar Painel</button></Link>
+    <div className="text-white p-6">
+      <h1 className="text-3xl font-bold">Painel Bot — Acesso Rápido</h1>
+      <p className="text-gray-400 mt-1">Área exclusiva para gestão e controlo do teu Bot.</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+
+        <div className="card p-4 bg-[#0f0f10] rounded-lg">
+          <h3 className="text-xl font-semibold">Entrar</h3>
+          <p className="text-gray-400 text-sm">Login seguro (Email + PIN)</p>
+          <Link href="/painel-bot/login">
+            <button className="btn mt-3 w-full bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2">
+              Acessar Painel
+            </button>
+          </Link>
         </div>
-        <div className="card">
-          <h3>Webhook</h3>
-          <p className="small">Monitor de Webhook e testes</p>
-          <Link href="/painel-bot/webhook"><button className="btn">Abrir Webhook</button></Link>
+
+        <div className="card p-4 bg-[#0f0f10] rounded-lg">
+          <h3 className="text-xl font-semibold">Webhook</h3>
+          <p className="text-gray-400 text-sm">Monitor de Webhook e testes</p>
+          <Link href="/painel-bot/webhook">
+            <button className="btn mt-3 w-full bg-[#111] border border-gray-700 hover:bg-white/5 rounded-lg px-4 py-2">
+              Abrir Webhook
+            </button>
+          </Link>
         </div>
-        <div className="card">
-          <h3>Logs</h3>
-          <p className="small">Logs em tempo real e histórico</p>
-          <Link href="/painel-bot/logs"><button className="btn">Abrir Logs</button></Link>
+
+        <div className="card p-4 bg-[#0f0f10] rounded-lg">
+          <h3 className="text-xl font-semibold">Logs</h3>
+          <p className="text-gray-400 text-sm">Logs em tempo real e histórico</p>
+          <Link href="/painel-bot/logs">
+            <button className="btn mt-3 w-full bg-[#111] border border-gray-700 hover:bg-white/5 rounded-lg px-4 py-2">
+              Abrir Logs
+            </button>
+          </Link>
         </div>
-        <div className="card">
-          <h3>Deploy & Backup</h3>
-          <p className="small">Upload / Snapshots / One-click</p>
-          <Link href="/painel-bot/deploy"><button className="btn">Deploy</button></Link>
+
+        <div className="card p-4 bg-[#0f0f10] rounded-lg">
+          <h3 className="text-xl font-semibold">Deploy & Backup</h3>
+          <p className="text-gray-400 text-sm">Upload / Snapshots / One-click</p>
+          <Link href="/painel-bot/deploy">
+            <button className="btn mt-3 w-full bg-[#111] border border-gray-700 hover:bg-white/5 rounded-lg px-4 py-2">
+              Deploy
+            </button>
+          </Link>
         </div>
+
       </div>
     </div>
   );
