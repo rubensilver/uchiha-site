@@ -1,50 +1,31 @@
-export const metadata = {
-  title: "Data Deletion",
-  description: "Política de Exclusão de Dados do Uchiha Bot",
-};
-
 export default function DataDeletionPage() {
   return (
-    <main style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Política de Exclusão de Dados</h1>
+    <div style={{ padding: "40px", maxWidth: 800, margin: "0 auto" }}>
+      <h1>Data Deletion Instructions – Uchiha Bot</h1>
+      <p>Conforme exigido pelo Meta for Developers.</p>
 
       <p>
-        De acordo com as diretrizes da Meta e boas práticas de privacidade,
-        oferecemos aos usuários um método simples para solicitar a exclusão de
-        todos os dados relacionados ao uso do nosso bot.
+        Se você deseja solicitar a exclusão dos seus dados associados ao Uchiha Bot,
+        siga uma das opções abaixo:
       </p>
 
-      <h2>Quais dados coletamos?</h2>
+      <h2>1. Enviar Email</h2>
+      <p>
+        Envie uma mensagem para <b>uchihaweb.help@gmail.com</b> contendo:
+      </p>
       <ul>
-        <li>ID do usuário do WhatsApp para identificação básica;</li>
-        <li>Mensagens necessárias para o funcionamento do bot;</li>
-        <li>Preferências de uso (quando aplicável).</li>
+        <li>Seu número de WhatsApp;</li>
+        <li>Nome completo;</li>
+        <li>Assunto: “Data Deletion Request”.</li>
       </ul>
 
-      <p>Nenhum dado sensível é armazenado.</p>
+      <h2>2. Mensagem ao Bot</h2>
+      <p>Digite: <b>“DELETE MY DATA”</b> para iniciar o processo.</p>
 
-      <h2>Como solicitar exclusão de dados?</h2>
-      <p>Para excluir seus dados, envie uma mensagem para:</p>
-      <p><strong>Email:</strong> verzinoniy@gmail.com</p>
-
+      <h2>3. Prazo de Exclusão</h2>
       <p>
-        No assunto, coloque: <strong>Solicitação de Exclusão de Dados</strong>.
+        Seus dados serão completamente removidos em até 48 horas após a solicitação.
       </p>
-
-      <h3>Inclua no pedido:</h3>
-      <ul>
-        <li>Seu número de telefone vinculado ao WhatsApp;</li>
-        <li>Uma confirmação expressa de que deseja excluir seus dados.</li>
-      </ul>
-
-      <h2>Prazo para exclusão</h2>
-      <p>
-        Após o pedido, os dados serão removidos em até{" "}
-        <strong>7 dias úteis</strong>.
-      </p>
-
-      <h2>Dúvidas?</h2>
-      <p>Entre em contato pelo email acima. Estamos disponíveis para ajudar.</p>
-    </main>
+    </div>
   );
 }
