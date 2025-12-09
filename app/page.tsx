@@ -14,7 +14,7 @@ export default function Home() {
           visualizar logs e administrar tudo pelo painel.
         </p>
 
-        {/* 🔥 4 BOTÕES PRINCIPAIS */}
+        {/* 🔥 5 BOTÕES PRINCIPAIS (ADICIONADO PAINEL DO BOT) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
 
           <a
@@ -22,6 +22,13 @@ export default function Home() {
             className="block w-full text-center px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 transition"
           >
             Acessar Painel
+          </a>
+
+          <a
+            href="/painel-bot"
+            className="block w-full text-center px-6 py-3 rounded-lg bg-red-600/80 hover:bg-red-700/80 transition"
+          >
+            Painel do Bot
           </a>
 
           <a
@@ -44,6 +51,7 @@ export default function Home() {
           >
             Logs do Bot
           </a>
+
         </div>
 
       </div>
