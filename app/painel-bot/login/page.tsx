@@ -1,49 +1,109 @@
 'use client';
+
 import { useState } from 'react';
 
 export default function Login() {
-  const [email,setEmail]=useState('');
-  const [pass,setPass]=useState('');
-  const [pin,setPin]=useState('');
-  const [step,setStep]=useState<'cred'|'pin'>('cred');
-  const [msg,setMsg]=useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [pin, setPin] = useState('');
+  const [step, setStep] = useState<'cred' | 'pin'>('cred');
+  const [msg, setMsg] = useState('');
 
-  async function sendCred(){
+  async function sendCred() {
     setMsg('');
-    const res = await fetch('/api/painel-bot/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email, password:pass})});
-    const text = await res.text();
+    const res = await fetch('/api/painel-bot/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
+
+    let data;
     try {
-      const data = JSON.parse(text);
-      if(!res.ok) return setMsg(data.error || 'Credenciais inválidas');
-      setStep('pin');
-    } catch(e){ setMsg('Resposta inválida do servidor'); }
+      data = await res.json();
+    } catch {
+      return setMsg('Erro ao interpretar resposta do servidor');
+    }
+
+    if (!res.ok) return setMsg(data.error || 'Credenciais inválidas');
+
+    // Próximo passo: PIN
+    setStep('pin');
   }
 
-  async function sendPin(){
+  async function sendPin() {
     setMsg('');
-    const res = await fetch('/api/painel-bot/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin})});
-    const text = await res.text();
+    const res = await fetch('/api/painel-bot/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin })
+    });
+
+    let data;
     try {
-      const data = JSON.parse(text);
-      if(!res.ok) return setMsg(data.error || 'PIN inválido');
-      window.location.href = '/painel-bot/dashboard';
-    } catch(e){ setMsg('Resposta inválida do servidor'); }
+      data = await res.json();
+    } catch {
+      return setMsg('Erro ao interpretar resposta do servidor');
+    }
+
+    if (!res.ok) return setMsg(data.error || 'PIN inválido');
+
+    // Login finalizado – agora vai para dashboard
+    window.location.href = '/painel-bot/dashboard';
   }
 
   return (
-    <div style={{maxWidth:420,margin:'0 auto'}}>
-      <div className="card">
-        <h2>Login Painel Bot</h2>
-        {step==='cred' ? <>
-          <input className="input" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
-          <input className="input" placeholder="Senha" type="password" value={pass} onChange={e=>setPass(e.target.value)} />
-          <div style={{marginTop:10}}><button className="btn" onClick={sendCred}>Continuar</button></div>
-        </> : <>
-          <p className="small">Enviámos um PIN (simulação). Insere o PIN.</p>
-          <input className="input" placeholder="PIN" value={pin} onChange={e=>setPin(e.target.value)} />
-          <div style={{marginTop:10}}><button className="btn" onClick={sendPin}>Confirmar PIN</button></div>
-        </>}
-        {msg && <p style={{color:'#ff9999',marginTop:10}}>{msg}</p>}
+    <div className="max-w-md mx-auto p-4">
+      <div className="card bg-[#0f0f10] p-6 rounded-lg border border-white/10">
+
+        <h2 className="text-xl font-semibold text-white mb-4">Login Painel Bot</h2>
+
+        {step === 'cred' ? (
+          <>
+            <input
+              className="input mb-3"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+
+            <input
+              className="input mb-3"
+              type="password"
+              placeholder="Senha"
+              value={pass}
+              onChange={e => setPass(e.target.value)}
+            />
+
+            <button
+              className="btn w-full bg-red-600 hover:bg-red-700 rounded-lg py-2"
+              onClick={sendCred}
+            >
+              Continuar
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="text-gray-400 text-sm mb-2">
+              Enviámos um PIN (simulado). Insere abaixo:
+            </p>
+
+            <input
+              className="input mb-3"
+              placeholder="PIN"
+              value={pin}
+              onChange={e => setPin(e.target.value)}
+            />
+
+            <button
+              className="btn w-full bg-red-600 hover:bg-red-700 rounded-lg py-2"
+              onClick={sendPin}
+            >
+              Confirmar PIN
+            </button>
+          </>
+        )}
+
+        {msg && <p className="text-red-400 mt-3 text-sm">{msg}</p>}
       </div>
     </div>
   );
