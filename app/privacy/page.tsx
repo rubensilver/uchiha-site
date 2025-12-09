@@ -1,43 +1,45 @@
 export default function PrivacyPage() {
   return (
-    <div className="max-w-3xl mx-auto py-10 text-white">
-      <h1 className="text-3xl font-bold mb-4">Política de Privacidade</h1>
+    <div style={{ padding: "40px", maxWidth: 800, margin: "0 auto" }}>
+      <h1>Política de Privacidade – Uchiha Bot</h1>
+      <p>Última atualização: 2025</p>
 
-      <p className="text-gray-300 mb-4">
-        Esta Política de Privacidade descreve como coletamos, usamos e
-        protegemos as informações fornecidas pelos usuários ao utilizar nossos
-        serviços e o Uchiha Bot.
+      <p>
+        Esta Política de Privacidade descreve como coletamos, usamos e protegemos as
+        informações dos usuários que interagem com o Uchiha Bot através do WhatsApp,
+        Facebook ou outros serviços conectados.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">1. Dados Coletados</h2>
-      <p className="text-gray-300 mb-4">
-        Coletamos apenas informações necessárias para o funcionamento correto
-        do bot, como: número de telefone, mensagens enviadas para o bot e dados
-        essenciais de integração da API do WhatsApp Business.
+      <h2>1. Informações Coletadas</h2>
+      <p>
+        O Uchiha Bot pode coletar mensagens enviadas pelo usuário para fins de resposta
+        automática. Não coletamos dados sensíveis e nenhuma informação é vendida a terceiros.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">2. Uso das Informações</h2>
-      <p className="text-gray-300 mb-4">
-        Utilizamos os dados exclusivamente para processar comandos,
-        personalizar respostas e garantir o funcionamento do bot.
+      <h2>2. Uso das Informações</h2>
+      <p>Os dados são usados exclusivamente para:</p>
+      <ul>
+        <li>Responder mensagens;</li>
+        <li>Melhorar comandos do bot;</li>
+        <li>Garantir funcionamento adequado da plataforma.</li>
+      </ul>
+
+      <h2>3. Compartilhamento</h2>
+      <p>Não compartilhamos informações com terceiros.</p>
+
+      <h2>4. Segurança</h2>
+      <p>
+        Utilizamos medidas técnicas adequadas para proteger os dados contra acesso não autorizado.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">3. Compartilhamento</h2>
-      <p className="text-gray-300 mb-4">
-        Não vendemos, compartilhamos ou divulgamos seus dados pessoais a
-        terceiros, exceto quando exigido por lei.
+      <h2>5. Exclusão de Dados</h2>
+      <p>
+        Para solicitar exclusão, acesse:{" "}
+        <a href="/data-deletion">https://uchihaweb.onrender.com/data-deletion</a>
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">4. Segurança</h2>
-      <p className="text-gray-300 mb-4">
-        Utilizamos medidas técnicas e administrativas adequadas para manter
-        seus dados protegidos e seguros.
-      </p>
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">5. Contato</h2>
-      <p className="text-gray-300">
-        Caso tenha dúvidas, contacte-nos: suporte@uchihaweb.com
-      </p>
+      <h2>6. Contato</h2>
+      <p>Email: uchihaweb.help@gmail.com</p>
     </div>
   );
 }
